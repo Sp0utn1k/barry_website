@@ -5,11 +5,11 @@ function updateSliderBackground(slider, color) {
     var percentage = (value - min) / (max - min) * 100;
 
     /* For WebKit browsers */
-    var bg = 'linear-gradient(to right, ' + color + ' 0%, ' + color + ' ' + percentage + '%, #cccccc ' + percentage + '%, #cccccc 100%)';
-    slider.style.background = bg;
+    slider.style.background = 'linear-gradient(to right, ' + color + ' 0%, ' + color + ' ' + percentage + '%, #cccccc ' + percentage + '%, #cccccc 100%)';
 
     /* For Firefox */
     slider.style.setProperty('--range-progress', percentage + '%');
+    slider.style.setProperty('--slider-color', color);
 }
 
 var sliders = [

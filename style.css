@@ -12,6 +12,7 @@ header {
     padding: 10px 20px;
 }
 
+/* BARRY text style */
 .text-block {
     color: #000;
     justify-content: center;
@@ -22,7 +23,7 @@ header {
     display: flex;
 }
 
-/* Header right section */
+/* Desktop Menu */
 #header-right {
     display: flex;
     align-items: center;
@@ -32,9 +33,9 @@ header {
     margin-left: 20px;
     text-decoration: none;
     color: black;
-    font-size: 24px; /* Increased font size */
+    font-size: 24px;
     cursor: pointer;
-    text-transform: uppercase; /* Capitalized text */
+    text-transform: uppercase;
 }
 
 /* Dropdown menu */
@@ -57,8 +58,8 @@ header {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    font-size: 20px; /* Increased font size */
-    text-transform: uppercase; /* Capitalized text */
+    font-size: 20px;
+    text-transform: uppercase;
 }
 
 .dropdown:hover .dropdown-content {
@@ -66,11 +67,22 @@ header {
 }
 
 /* Mobile Menu Styles */
+.mobile-menu-icon {
+    display: none; /* Hide by default */
+}
+
+.mobile-menu {
+    display: none;
+}
+
+/* Media Queries */
 @media screen and (max-width: 768px) {
+    /* Hide desktop menu */
     #header-right {
         display: none;
     }
 
+    /* Show mobile menu icon */
     .mobile-menu-icon {
         display: block;
         cursor: pointer;
@@ -78,6 +90,7 @@ header {
         margin-right: 20px;
     }
 
+    /* Mobile menu styles */
     .mobile-menu {
         display: none;
         flex-direction: column;
@@ -98,10 +111,21 @@ header {
         text-align: center;
         font-size: 24px;
         border-bottom: 1px solid #ccc;
+        text-transform: uppercase;
     }
 
     .mobile-menu a:last-child {
         border-bottom: none;
+    }
+
+    /* Mobile dropdown content */
+    .mobile-dropdown-content {
+        display: none;
+        width: 100%;
+    }
+
+    .mobile-dropdown-content a {
+        padding-left: 30px;
     }
 }
 
@@ -142,49 +166,63 @@ header {
 }
 
 .slider-container .color-name {
-    font-size: 28px; /* Increased font size */
+    font-size: 28px;
     margin-bottom: 10px;
 }
 
+/* Increased margin on slider edges */
 .slider {
-    width: 100%;
+    width: calc(100% - 40px); /* Reduce width to create margins */
+    margin: 0 20px; /* Add margins on left and right */
     -webkit-appearance: none;
     appearance: none;
-    height: 25px; /* Increased height */
+    height: 25px;
     border-radius: 5px;
-    background: #cccccc; /* Default background color for the slider track */
+    background: #cccccc;
     outline: none;
     cursor: pointer;
 }
 
-/* Firefox Slider Track */
-.slider::-moz-range-track {
-    background: #cccccc;
+/* Slider track height adjustments */
+.slider::-webkit-slider-runnable-track {
     height: 25px;
     border-radius: 5px;
+}
+
+/* Adjust filled portion thickness */
+.slider::-moz-range-track {
+    height: 25px;
+    border-radius: 5px;
+    background: #cccccc;
+}
+
+.slider::-moz-range-progress {
+    height: 25px;
+    border-radius: 5px;
+    background: var(--slider-color, #4CAF50);
 }
 
 /* Slider thumb styling */
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 35px; /* Increased size */
+    width: 35px;
     height: 35px;
     border-radius: 50%;
-    background: #4CAF50; /* Default thumb color */
+    background: #4CAF50;
     cursor: pointer;
+    margin-top: -5px; /* Adjust position to center thumb */
 }
 
 .slider::-moz-range-thumb {
-    width: 35px; /* Increased size */
+    width: 35px;
     height: 35px;
     border-radius: 50%;
-    background: #4CAF50; /* Default thumb color */
+    background: #4CAF50;
     cursor: pointer;
 }
 
 /* Custom thumb colors */
-
 /* RED Slider Thumb Color */
 .slider-red::-webkit-slider-thumb {
     background: #a50f01;
@@ -230,7 +268,7 @@ header {
     justify-content: center;
     align-items: center;
     font-family: Oswald, sans-serif;
-    font-size: 28px; /* Increased font size */
+    font-size: 28px;
     display: flex;
 }
 
@@ -253,45 +291,23 @@ header {
     position: static;
 }
 
-/* Slider Fill Styling */
-.slider::-webkit-slider-runnable-track {
-    height: 25px;
-    border-radius: 5px;
+/* Slider Fill Styling for Firefox */
+.slider {
+    --slider-color: #4CAF50; /* Default color */
 }
 
-.slider-red::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #a50f01 0%, #a50f01 0%, #cccccc 0%, #cccccc 100%);
+.slider-red {
+    --slider-color: #a50f01;
 }
 
-.slider-green::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #299e37 0%, #299e37 0%, #cccccc 0%, #cccccc 100%);
+.slider-green {
+    --slider-color: #299e37;
 }
 
-.slider-blue::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #4d8dd6 0%, #4d8dd6 0%, #cccccc 0%, #cccccc 100%);
+.slider-blue {
+    --slider-color: #4d8dd6;
 }
 
-.slider-warm-white::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #ffeac1 0%, #ffeac1 0%, #cccccc 0%, #cccccc 100%);
-}
-
-/* Firefox Slider Track Fill */
-.slider-red::-moz-range-progress {
-    background: #a50f01;
-}
-
-.slider-green::-moz-range-progress {
-    background: #299e37;
-}
-
-.slider-blue::-moz-range-progress {
-    background: #4d8dd6;
-}
-
-.slider-warm-white::-moz-range-progress {
-    background: #ffeac1;
-}
-
-.slider::-moz-range-track {
-    background: #cccccc;
+.slider-warm-white {
+    --slider-color: #ffeac1;
 }
