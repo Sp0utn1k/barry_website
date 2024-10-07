@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Lampe Chambre</title>
+    <link href="https://fonts.googleapis.com/css?family=Changa+One|Oswald&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--#include virtual="header.html" -->
+    <div id="lampe-content">
+        <div class="cell">
+            <div class="text-block-red">ROUGE</div>
+            <input type="number" min="0" max="32767">
+        </div>
+        <div class="cell">
+            <div class="text-block-green">VERT</div>
+            <input type="number" min="0" max="32767">
+        </div>
+        <div class="cell">
+            <div class="text-block-blue">BLEU</div>
+            <input type="number" min="0" max="32767">
+        </div>
+        <div class="cell">
+            <div class="text-block-warm-white">BLANC CHAUD</div>
+            <input type="number" min="0" max="32767">
+        </div>
+    </div>
+</body>
+</html>

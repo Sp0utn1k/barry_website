@@ -1,79 +1,158 @@
+/* General styles */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    font-family: 'Oswald', sans-serif;
 }
 
+/* Header styles */
 header {
-    background-color: #50b3a2;
-    color: white;
-    padding: 20px;
-    text-align: left;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.logo {
-    max-width: 50px;
-    margin-top: 0;
-}
-
-.menu-button {
-    background-color: #50b3a2;
-    color: white;
-    border: none;
     padding: 10px 20px;
-    font-size: 18px;
+}
+
+/* Style for 'BARRY' */
+.text-block {
+    color: #000;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 20px;
+    font-family: 'Changa One', Impact, sans-serif;
+    font-size: 80px;
+    display: flex;
+}
+
+.text-block-2 {
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 600px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-family: Oswald, sans-serif;
+    font-size: 60px;
+    display: flex;
+}
+
+/* Header right section */
+#header-right {
+    display: flex;
+    align-items: center;
+}
+
+#header-right a, .dropbtn {
+    margin-left: 20px;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
     cursor: pointer;
 }
 
-.menu-button:hover {
-    background-color: #e8491d;
+/* Dropdown menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
 
-.sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    top: 0;
-    right: 0;
-    background-color: #35424a;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: white;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav a:hover {
-    background-color: #e8491d;
-}
-
-.closebtn {
+.dropdown-content {
+    display: none;
     position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-.container {
-    padding: 30px;
+.dropdown-content a {
+    color: black;
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Content styles for index.shtml */
+#content {
     text-align: center;
+    margin-top: 50px;
+}
+
+#content h1 {
+    font-size: 60px;
+}
+
+/* Content styles for lampe_chambre.shtml */
+#lampe-content {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.cell {
+    margin: 0 10px;
+    text-align: center;
+}
+
+.cell input[type="number"] {
+    width: 100px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+/* Text styles for color names */
+.text-block-red {
+    color: #a50f01;
+    flex-flow: row;
+    flex: 0 auto;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 5px;
+    font-family: Oswald, sans-serif;
+    font-size: 20px;
+    display: flex;
+}
+
+.text-block-green {
+    color: #299e37;
+    flex-flow: row;
+    flex: 0 auto;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 5px;
+    font-family: Oswald, sans-serif;
+    font-size: 20px;
+    display: flex;
+}
+
+.text-block-blue {
+    color: #4d8dd6;
+    flex-flow: row;
+    flex: 0 auto;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 5px;
+    font-family: Oswald, sans-serif;
+    font-size: 20px;
+    display: flex;
+}
+
+.text-block-warm-white {
+    color: #ffeac1;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #9e8c00;
+    flex-flow: row;
+    flex: 0 auto;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 5px;
+    font-family: Oswald, sans-serif;
+    font-size: 20px;
+    display: flex;
+    position: static;
 }

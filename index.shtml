@@ -2,15 +2,16 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Barry - accueil</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Acceuil</title>
+    <link href="https://fonts.googleapis.com/css?family=Changa+One|Oswald&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Inclusion du header -->
     <!--#include virtual="header.html" -->
-    
-    <div class="container">
-        <p>Bienvenue sur le site de Barry !</p>
+    <div id="content">
+        <div class="text-block-2">
+            Bienvenue sur le site de Barry&nbsp;!
+        </div>
     </div>
 </body>
 </html>
