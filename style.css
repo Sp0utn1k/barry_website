@@ -2,6 +2,7 @@
 body {
     margin: 0;
     font-family: 'Oswald', sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 /* Header styles */
@@ -10,6 +11,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    position: relative;
 }
 
 /* BARRY text style */
@@ -21,6 +23,7 @@ header {
     font-family: 'Changa One', Impact, sans-serif;
     font-size: 80px;
     display: flex;
+    z-index: 1000;
 }
 
 /* Desktop Menu */
@@ -69,6 +72,7 @@ header {
 /* Mobile Menu Styles */
 .mobile-menu-icon {
     display: none; /* Hide by default */
+    z-index: 1001;
 }
 
 .mobile-menu {
@@ -77,6 +81,13 @@ header {
 
 /* Media Queries */
 @media screen and (max-width: 1024px) {
+
+    .text-block {
+        font-size: 60px; /* Reduce font size */
+        padding-left: 15px; /* Adjust padding */
+        margin-right: 50px; /* Ensure space for menu icon */
+    }
+
     /* Hide desktop menu */
     #header-right {
         display: none;
@@ -87,7 +98,6 @@ header {
         display: block;
         cursor: pointer;
         font-size: 30px;
-        margin-right: 20px;
     }
 
     /* Mobile menu styles */
