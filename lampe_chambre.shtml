@@ -9,22 +9,48 @@
 <body>
     <!--#include virtual="header.html" -->
     <div id="lampe-content">
-        <div class="cell">
+        <div class="slider-container">
             <div class="text-block-red">ROUGE</div>
-            <input type="number" min="0" max="32767">
+            <input type="range" min="0" max="32767" value="0" class="slider slider-red" id="slider-red">
         </div>
-        <div class="cell">
+        <div class="slider-container">
             <div class="text-block-green">VERT</div>
-            <input type="number" min="0" max="32767">
+            <input type="range" min="0" max="32767" value="0" class="slider slider-green" id="slider-green">
         </div>
-        <div class="cell">
+        <div class="slider-container">
             <div class="text-block-blue">BLEU</div>
-            <input type="number" min="0" max="32767">
+            <input type="range" min="0" max="32767" value="0" class="slider slider-blue" id="slider-blue">
         </div>
-        <div class="cell">
+        <div class="slider-container">
             <div class="text-block-warm-white">BLANC CHAUD</div>
-            <input type="number" min="0" max="32767">
+            <input type="range" min="0" max="32767" value="0" class="slider slider-warm-white" id="slider-warm-white">
         </div>
     </div>
+
+    <script>
+        function updateSliderBackground(slider, color) {
+            var value = slider.value;
+            var min = slider.min;
+            var max = slider.max;
+            var percentage = (value - min) / (max - min) * 100;
+
+            slider.style.background = 'linear-gradient(to right, ' + color + ' 0%, ' + color + ' ' + percentage + '%, #ffffff ' + percentage + '%, #ffffff 100%)';
+        }
+
+        var sliders = [
+            {id: 'slider-red', color: '#a50f01'},
+            {id: 'slider-green', color: '#299e37'},
+            {id: 'slider-blue', color: '#4d8dd6'},
+            {id: 'slider-warm-white', color: '#ffeac1'}
+        ];
+
+        sliders.forEach(function(s) {
+            var slider = document.getElementById(s.id);
+            updateSliderBackground(slider, s.color);
+            slider.addEventListener('input', function() {
+                updateSliderBackground(slider, s.color);
+            });
+        });
+    </script>
 </body>
 </html>

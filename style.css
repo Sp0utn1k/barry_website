@@ -156,3 +156,82 @@ header {
     display: flex;
     position: static;
 }
+
+#lampe-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    width: 100%;
+    padding: 0 20px; /* Side margins */
+}
+
+.slider-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.slider {
+    width: 100%;
+    -webkit-appearance: none; /* Remove default styling */
+    appearance: none;
+    height: 15px;
+    border-radius: 5px;
+    background: #ffffff; /* Default background */
+    outline: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* Slider thumb styling */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50; /* Default thumb color */
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50; /* Default thumb color */
+    cursor: pointer;
+}
+
+/* Custom thumb colors */
+
+/* RED Slider Thumb Color */
+.slider-red::-webkit-slider-thumb {
+    background: #a50f01; /* Red thumb color */
+}
+.slider-red::-moz-range-thumb {
+    background: #a50f01;
+}
+
+/* GREEN Slider Thumb Color */
+.slider-green::-webkit-slider-thumb {
+    background: #299e37; /* Green thumb color */
+}
+.slider-green::-moz-range-thumb {
+    background: #299e37;
+}
+
+/* BLUE Slider Thumb Color */
+.slider-blue::-webkit-slider-thumb {
+    background: #4d8dd6; /* Blue thumb color */
+}
+.slider-blue::-moz-range-thumb {
+    background: #4d8dd6;
+}
+
+/* WARM WHITE Slider Thumb Color */
+.slider-warm-white::-webkit-slider-thumb {
+    background: #ffeac1; /* Warm white thumb color */
+}
+.slider-warm-white::-moz-range-thumb {
+    background: #ffeac1;
+}
