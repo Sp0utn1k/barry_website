@@ -1,3 +1,9 @@
+/* Set box-sizing globally */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+
 /* General styles */
 body {
     margin: 0;
@@ -167,15 +173,15 @@ header {
     align-items: center;
     margin-top: 50px;
     width: 100%;
-    padding: 0 20px; /* Side margins */
 }
 
 .slider-container {
     width: 100%;
-    padding: 0 20px; /* Add left and right padding for margins */
+    padding: 0 20px; /* Left and right padding for margins */
     margin-bottom: 30px;
-    box-sizing: border-box; /* Include padding in the total width */
+    box-sizing: border-box; /* Include padding in width */
 }
+
 
 .slider-container .color-name {
     font-size: 28px;
