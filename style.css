@@ -125,7 +125,7 @@ header {
     }
 
     .mobile-menu a,
-    .mobile-menu .dropbtn {
+    .mobile-menu .mobile-dropbtn {
         padding: 15px 20px; /* Uniform padding */
         text-decoration: none;
         color: black;
@@ -139,7 +139,7 @@ header {
 
     /* Remove border from the last menu item */
     .mobile-menu a:last-child,
-    .mobile-menu .dropbtn:last-child {
+    .mobile-menu .mobile-dropbtn:last-child {
         border-bottom: none;
     }
 
@@ -172,12 +172,13 @@ header {
         border-bottom: none;
     }
 
-    /* Ensure LAMPES doesn't shift when submenu opens */
-    .mobile-dropdown .dropbtn {
+    /* Ensure LAMPES stays aligned with ACCEUIL */
+    .mobile-menu .mobile-dropdown .mobile-dropbtn {
         width: 100%;
         display: block;
         text-align: left;
-        padding: 15px 20px;
+        padding: 15px 20px; /* Same padding as top-level items */
+        font-size: 24px;
     }
 }
 
