@@ -1,11 +1,21 @@
 <header>
     <div class="text-block">BARRY</div>
+    <div class="mobile-menu-icon" onclick="toggleMobileMenu()">&#9776;</div>
     <div id="header-right">
-        <a href="index.shtml">acceuil</a>
+        <a href="index.shtml">Acceuil</a>
         <div class="dropdown">
-            <span class="dropbtn">lampes</span>
+            <span class="dropbtn">Lampes</span>
             <div class="dropdown-content">
-                <a href="lampe_chambre.shtml">chambre</a>
+                <a href="lampe_chambre.shtml">Chambre</a>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.shtml">Acceuil</a>
+        <div class="dropdown">
+            <span class="dropbtn" onclick="toggleSubMenu()">Lampes</span>
+            <div class="dropdown-content" id="mobileSubMenu">
+                <a href="lampe_chambre.shtml">Chambre</a>
             </div>
         </div>
     </div>

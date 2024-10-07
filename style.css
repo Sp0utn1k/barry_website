@@ -12,7 +12,6 @@ header {
     padding: 10px 20px;
 }
 
-/* Style for 'BARRY' */
 .text-block {
     color: #000;
     justify-content: center;
@@ -23,6 +22,96 @@ header {
     display: flex;
 }
 
+/* Header right section */
+#header-right {
+    display: flex;
+    align-items: center;
+}
+
+#header-right a, .dropbtn {
+    margin-left: 20px;
+    text-decoration: none;
+    color: black;
+    font-size: 24px; /* Increased font size */
+    cursor: pointer;
+    text-transform: uppercase; /* Capitalized text */
+}
+
+/* Dropdown menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 20px; /* Increased font size */
+    text-transform: uppercase; /* Capitalized text */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Mobile Menu Styles */
+@media screen and (max-width: 768px) {
+    #header-right {
+        display: none;
+    }
+
+    .mobile-menu-icon {
+        display: block;
+        cursor: pointer;
+        font-size: 30px;
+        margin-right: 20px;
+    }
+
+    .mobile-menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f9f9f9;
+        position: absolute;
+        top: 80px;
+        width: 100%;
+        left: 0;
+        z-index: 1000;
+    }
+
+    .mobile-menu a {
+        padding: 15px;
+        text-decoration: none;
+        color: black;
+        width: 100%;
+        text-align: center;
+        font-size: 24px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .mobile-menu a:last-child {
+        border-bottom: none;
+    }
+}
+
+/* Content styles for index.shtml */
+#content {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Style for 'Bienvenue sur le site de Barry !' */
 .text-block-2 {
     flex-flow: column;
     justify-content: center;
@@ -37,126 +126,7 @@ header {
     display: flex;
 }
 
-/* Header right section */
-#header-right {
-    display: flex;
-    align-items: center;
-}
-
-#header-right a, .dropbtn {
-    margin-left: 20px;
-    text-decoration: none;
-    color: black;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-/* Dropdown menu */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #f9f9f9;
-    min-width: 100px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 8px 12px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-/* Content styles for index.shtml */
-#content {
-    text-align: center;
-    margin-top: 50px;
-}
-
-#content h1 {
-    font-size: 60px;
-}
-
 /* Content styles for lampe_chambre.shtml */
-#lampe-content {
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
-}
-
-.cell {
-    margin: 0 10px;
-    text-align: center;
-}
-
-.cell input[type="number"] {
-    width: 100px;
-    padding: 5px;
-    font-size: 16px;
-}
-
-/* Text styles for color names */
-.text-block-red {
-    color: #a50f01;
-    flex-flow: row;
-    flex: 0 auto;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 5px;
-    font-family: Oswald, sans-serif;
-    font-size: 20px;
-    display: flex;
-}
-
-.text-block-green {
-    color: #299e37;
-    flex-flow: row;
-    flex: 0 auto;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 5px;
-    font-family: Oswald, sans-serif;
-    font-size: 20px;
-    display: flex;
-}
-
-.text-block-blue {
-    color: #4d8dd6;
-    flex-flow: row;
-    flex: 0 auto;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 5px;
-    font-family: Oswald, sans-serif;
-    font-size: 20px;
-    display: flex;
-}
-
-.text-block-warm-white {
-    color: #ffeac1;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: #9e8c00;
-    flex-flow: row;
-    flex: 0 auto;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 5px;
-    font-family: Oswald, sans-serif;
-    font-size: 20px;
-    display: flex;
-    position: static;
-}
-
 #lampe-content {
     display: flex;
     flex-direction: column;
@@ -168,35 +138,46 @@ header {
 
 .slider-container {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.slider-container .color-name {
+    font-size: 28px; /* Increased font size */
+    margin-bottom: 10px;
 }
 
 .slider {
     width: 100%;
-    -webkit-appearance: none; /* Remove default styling */
+    -webkit-appearance: none;
     appearance: none;
-    height: 15px;
+    height: 25px; /* Increased height */
     border-radius: 5px;
-    background: #ffffff; /* Default background */
+    background: #cccccc; /* Default background color for the slider track */
     outline: none;
-    margin-top: 10px;
     cursor: pointer;
+}
+
+/* Firefox Slider Track */
+.slider::-moz-range-track {
+    background: #cccccc;
+    height: 25px;
+    border-radius: 5px;
 }
 
 /* Slider thumb styling */
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 25px;
-    height: 25px;
+    width: 35px; /* Increased size */
+    height: 35px;
     border-radius: 50%;
     background: #4CAF50; /* Default thumb color */
     cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
+    width: 35px; /* Increased size */
+    height: 35px;
     border-radius: 50%;
     background: #4CAF50; /* Default thumb color */
     cursor: pointer;
@@ -206,32 +187,111 @@ header {
 
 /* RED Slider Thumb Color */
 .slider-red::-webkit-slider-thumb {
-    background: #a50f01; /* Red thumb color */
+    background: #a50f01;
 }
+
 .slider-red::-moz-range-thumb {
     background: #a50f01;
 }
 
 /* GREEN Slider Thumb Color */
 .slider-green::-webkit-slider-thumb {
-    background: #299e37; /* Green thumb color */
+    background: #299e37;
 }
+
 .slider-green::-moz-range-thumb {
     background: #299e37;
 }
 
 /* BLUE Slider Thumb Color */
 .slider-blue::-webkit-slider-thumb {
-    background: #4d8dd6; /* Blue thumb color */
+    background: #4d8dd6;
 }
+
 .slider-blue::-moz-range-thumb {
     background: #4d8dd6;
 }
 
 /* WARM WHITE Slider Thumb Color */
 .slider-warm-white::-webkit-slider-thumb {
-    background: #ffeac1; /* Warm white thumb color */
+    background: #ffeac1;
 }
+
 .slider-warm-white::-moz-range-thumb {
     background: #ffeac1;
+}
+
+/* Note: To customize the slider thumb colors, change the 'background' property under each '.slider-<color>::-webkit-slider-thumb' and '.slider-<color>::-moz-range-thumb' selector above. */
+
+/* Text styles for color names */
+.text-block-red, .text-block-green, .text-block-blue, .text-block-warm-white {
+    flex-flow: row;
+    flex: 0 auto;
+    justify-content: center;
+    align-items: center;
+    font-family: Oswald, sans-serif;
+    font-size: 28px; /* Increased font size */
+    display: flex;
+}
+
+.text-block-red {
+    color: #a50f01;
+}
+
+.text-block-green {
+    color: #299e37;
+}
+
+.text-block-blue {
+    color: #4d8dd6;
+}
+
+.text-block-warm-white {
+    color: #ffeac1;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #9e8c00;
+    position: static;
+}
+
+/* Slider Fill Styling */
+.slider::-webkit-slider-runnable-track {
+    height: 25px;
+    border-radius: 5px;
+}
+
+.slider-red::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #a50f01 0%, #a50f01 0%, #cccccc 0%, #cccccc 100%);
+}
+
+.slider-green::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #299e37 0%, #299e37 0%, #cccccc 0%, #cccccc 100%);
+}
+
+.slider-blue::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #4d8dd6 0%, #4d8dd6 0%, #cccccc 0%, #cccccc 100%);
+}
+
+.slider-warm-white::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #ffeac1 0%, #ffeac1 0%, #cccccc 0%, #cccccc 100%);
+}
+
+/* Firefox Slider Track Fill */
+.slider-red::-moz-range-progress {
+    background: #a50f01;
+}
+
+.slider-green::-moz-range-progress {
+    background: #299e37;
+}
+
+.slider-blue::-moz-range-progress {
+    background: #4d8dd6;
+}
+
+.slider-warm-white::-moz-range-progress {
+    background: #ffeac1;
+}
+
+.slider::-moz-range-track {
+    background: #cccccc;
 }
