@@ -27,6 +27,11 @@
             <input type="range" min="0" max="32767" value="0" class="slider slider-warm-white" id="slider-warm-white">
         </div>
     </div>
+    <!-- Presets section -->
+    <div id="presets-section">
+        <h3>Presets</h3>
+        <div id="presets-list"></div>
+    </div>
 
     <script src="scripts.js"></script>
     <script src="menu.js"></script>

@@ -23,6 +23,53 @@ var lastSentValues = {red: -1, green: -1, blue: -1, warmWhite: -1};
 var isSending = false;
 var queuedValue = null;  // Store the last value if it's queued
 
+// Load the presets from the JSON file
+fetch('presets.json')
+    .then(response => response.json())
+    .then(data => {
+        displayPresets(data);
+    })
+    .catch(error => console.error('Error loading presets:', error));
+
+// Function to display the presets and their load buttons
+function displayPresets(presets) {
+    const presetsList = document.getElementById('presets-list');
+    
+    presets.forEach(preset => {
+        const presetContainer = document.createElement('div');
+        presetContainer.className = 'preset-container';
+
+        const presetName = document.createElement('span');
+        presetName.textContent = preset.name;
+        presetContainer.appendChild(presetName);
+
+        const loadButton = document.createElement('button');
+        loadButton.textContent = 'Load';
+        loadButton.onclick = () => loadPreset(preset);
+        presetContainer.appendChild(loadButton);
+
+        presetsList.appendChild(presetContainer);
+    });
+}
+
+// Function to load the preset values into sliders and send them
+function loadPreset(preset) {
+    // Update slider values
+    document.getElementById('slider-red').value = preset.r;
+    document.getElementById('slider-green').value = preset.g;
+    document.getElementById('slider-blue').value = preset.b;
+    document.getElementById('slider-warm-white').value = preset.w;
+
+    // Update the slider backgrounds
+    updateSliderBackground(document.getElementById('slider-red'), '#a50f01');
+    updateSliderBackground(document.getElementById('slider-green'), '#299e37');
+    updateSliderBackground(document.getElementById('slider-blue'), '#4d8dd6');
+    updateSliderBackground(document.getElementById('slider-warm-white'), '#ffeac1');
+
+    // Send the RGBW values to the server
+    sendRGBWValues();
+}
+
 function sendRGBWValues() {
     if (isSending) {
         // Queue the value if a request is in progress
