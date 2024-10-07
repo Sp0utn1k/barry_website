@@ -111,7 +111,7 @@ header {
 
     /* Mobile menu styles */
     .mobile-menu {
-        display: flex;
+        display: none;
         flex-direction: column;
         align-items: flex-start; /* Align items to the start (left) */
         background-color: #f9f9f9;
@@ -176,6 +176,8 @@ header {
     .mobile-dropdown .dropbtn {
         width: 100%;
         display: block;
+        text-align: left;
+        padding: 15px 20px;
     }
 }
 
