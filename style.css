@@ -172,7 +172,9 @@ header {
 
 .slider-container {
     width: 100%;
+    padding: 0 20px; /* Add left and right padding for margins */
     margin-bottom: 30px;
+    box-sizing: border-box; /* Include padding in the total width */
 }
 
 .slider-container .color-name {
@@ -182,8 +184,8 @@ header {
 
 /* Increased margin on slider edges */
 .slider {
-    width: calc(100% - 40px); /* Reduce width to create margins */
-    margin: 0 20px; /* Add margins on left and right */
+    width: 100%;
+    margin: 0; /* Remove any default margins */
     -webkit-appearance: none;
     appearance: none;
     height: 25px;
@@ -191,6 +193,7 @@ header {
     background: #cccccc;
     outline: none;
     cursor: pointer;
+    box-sizing: border-box; /* Include padding and borders in width */
 }
 
 /* Slider track height adjustments */
