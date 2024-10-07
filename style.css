@@ -104,44 +104,78 @@ header {
         display: block;
         cursor: pointer;
         font-size: 30px;
+        position: absolute;
+        right: 20px;
+        top: 20px;
     }
 
     /* Mobile menu styles */
     .mobile-menu {
-        display: none;
+        display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start; /* Align items to the start (left) */
         background-color: #f9f9f9;
         position: absolute;
         top: 80px;
         width: 100%;
         left: 0;
         z-index: 1000;
+        padding: 0;
+        margin: 0;
     }
 
-    .mobile-menu a {
-        padding: 15px;
+    .mobile-menu a,
+    .mobile-menu .dropbtn {
+        padding: 15px 20px; /* Uniform padding */
         text-decoration: none;
         color: black;
         width: 100%;
-        text-align: center;
+        text-align: left; /* Align text to the left */
         font-size: 24px;
         border-bottom: 1px solid #ccc;
         text-transform: uppercase;
+        box-sizing: border-box;
     }
 
-    .mobile-menu a:last-child {
+    /* Remove border from the last menu item */
+    .mobile-menu a:last-child,
+    .mobile-menu .dropbtn:last-child {
         border-bottom: none;
     }
 
-    /* Mobile dropdown content */
-    .mobile-dropdown-content {
-        display: none;
+    /* Mobile dropdown */
+    .mobile-dropdown {
         width: 100%;
     }
 
+    .mobile-dropdown-content {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
     .mobile-dropdown-content a {
-        padding-left: 30px;
+        padding: 15px 40px; /* Indent submenu items */
+        text-decoration: none;
+        color: black;
+        width: 100%;
+        text-align: left;
+        font-size: 22px;
+        border-bottom: 1px solid #ccc;
+        text-transform: uppercase;
+        box-sizing: border-box;
+    }
+
+    .mobile-dropdown-content a:last-child {
+        border-bottom: none;
+    }
+
+    /* Ensure LAMPES doesn't shift when submenu opens */
+    .mobile-dropdown .dropbtn {
+        width: 100%;
+        display: block;
     }
 }
 

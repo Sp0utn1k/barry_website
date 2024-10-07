@@ -9,9 +9,9 @@ function toggleMobileMenu() {
 
 function toggleSubMenu() {
     var submenu = document.getElementById('mobileSubMenu');
-    if (submenu.style.display === 'block') {
+    if (submenu.style.display === 'flex') {
         submenu.style.display = 'none';
     } else {
-        submenu.style.display = 'block';
+        submenu.style.display = 'flex';
     }
 }
