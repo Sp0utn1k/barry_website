@@ -1,9 +1,16 @@
 <header>
-    <!-- Emplacement du logo personnalisé -->
-    <img src="images/barry_logo.webp" alt="Logo Barry" style="max-width: 50px; margin-top: 20px;">
+    <div class="header-content">
+        <!-- Emplacement du logo personnalisé -->
+        <img src="images/barry_logo.webp" alt="Logo Barry" class="logo">
+        <button class="menu-button" onclick="openNav()">☰ Menu</button>
+    </div>
 </header>
-<nav>
+<div id="sideNav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <ul>
         <li><a href="#">Accueil</a></li>
+        <!-- Ajouter d'autres liens ici -->
     </ul>
-</nav>
+</div>
+
+<script src="script.js"></script>
