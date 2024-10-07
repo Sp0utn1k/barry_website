@@ -29,7 +29,7 @@
     </div>
     <!-- Presets section -->
     <div id="presets-section">
-        <h3>Presets</h3>
+        <h3>Ambiances</h3>
         <div id="presets-list"></div>
     </div>
 
