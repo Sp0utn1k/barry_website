@@ -1,4 +1,3 @@
-
 function updateSliderBackground(slider, color) {
     var value = slider.value;
     var min = slider.min;
@@ -40,15 +39,15 @@ function sendRGBWValues() {
 
     isSending = true;
 
-    // Send the data via fetch
-    var rgbwString = `${red} ${green} ${blue} ${warmWhite}\n`;
+    // Send the data to your backend server
+    var rgbwString = `${red} ${green} ${blue} ${warmWhite}\\n`;
 
-    fetch('http://bedroom0.local:1234', {
+    fetch('http://barry.local:5000/sendRGBW', {
         method: 'POST',
         headers: {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'application/json'
         },
-        body: rgbwString
+        body: JSON.stringify({rgbw: rgbwString})
     }).then(response => {
         if (response.ok) {
             console.log('RGBW values sent:', rgbwString);
