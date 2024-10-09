@@ -29,23 +29,6 @@ Barry's Website is a locally hosted web application that provides extensive cont
 - **Automatic Deployment**: Seamlessly deploy updates via Git pushes.
 - **Secure Access**: Utilizes SSH keys for secure communication between PC and Raspberry Pi.
 
-## Prerequisites
-
-Before proceeding, ensure you have the following:
-
-- **Hardware**:
-  - Raspberry Pi 5 with the latest Raspberry Pi OS Lite installed.
-  - Network connectivity for the Raspberry Pi and your PC.
-
-- **Software**:
-  - Git installed on both your PC and Raspberry Pi.
-  - SSH access with SSH keys configured between your PC and Raspberry Pi.
-
-- **Repository**:
-  - The GitHub repository for Barry's Website: [https://github.com/Sp0utn1k/barry_website](https://github.com/Sp0utn1k/barry_website)
-
-**Note**: Replace any instances of `barry` with your specific username or hostname if they differ.
-
 ## Server Configuration
 
 ### 1. Update and Upgrade the System
@@ -185,12 +168,23 @@ To enable automatic deployment on new pushes, set up a Git post-receive hook.
     
     ```bash
     #!/bin/bash
-    GIT_WORK_TREE=/var/www/html git checkout -f
+    # Create a temporary directory
+    TMP_DIR=$(mktemp -d)
     
-    rsync -av --delete /home/barry/git/barry_website.git/deploy/ /var/www/html/
+    # Checkout the latest code to the temporary directory
+    git --work-tree=$TMP_DIR checkout -f
     
+    # Rsync the deploy directory to /var/www/html
+    rsync -av --delete $TMP_DIR/deploy/ /var/www/html/
+    
+    # Restart Apache
     sudo systemctl restart apache2
-
+    
+    # Update ownership
+    sudo chown -R www-data:www-data /var/www/html
+    
+    # Remove the temporary directory
+    rm -rf $TMP_DIR
     ```
     
     **Note**: Adjust the `GIT_WORK_TREE` path if your website directory differs.
