@@ -22,7 +22,7 @@ header {
     align-items: center;
     padding: 10px 20px;
     background-color: white; /* Ensure it has a background color */
-    z-index: 1000; /* Keep the header on top of other content */
+    z-index: 1100; /* Keep the header on top of other content */
     width: 100%; /* Ensure the header spans the full width */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: shadow for visual separation */
 }
