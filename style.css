@@ -13,18 +13,11 @@ body {
 
 /* Header styles */
 header {
-    position: fixed; /* Make sure the header is fixed at the top */
-    top: 0;
-    left: 0;
-    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: white; /* Ensure it has a background color */
-    z-index: 1100; /* Keep the header on top of other content */
-    width: 100%; /* Ensure the header spans the full width */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: shadow for visual separation */
+    position: relative;
 }
 
 /* BARRY text style */
