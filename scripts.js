@@ -157,3 +157,16 @@ sliders.forEach(function(s) {
         sendRGBWValues();
     });
 });
+
+// Function to adjust body's top padding based on header height
+function adjustBodyPadding() {
+    var header = document.querySelector('header'); // Get the header element
+    var headerHeight = header.offsetHeight; // Get the height of the header
+    document.body.style.paddingTop = headerHeight + 'px'; // Set the body's top padding to the header's height
+}
+
+// Call the function to adjust padding when the page loads
+window.onload = adjustBodyPadding;
+
+// Call the function to adjust padding when the window is resized
+window.onresize = adjustBodyPadding;
