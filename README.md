@@ -183,23 +183,33 @@ To enable automatic deployment on new pushes, set up a Git post-receive hook.
     
     ```bash
     #!/bin/bash
-    # Create a temporary directory
+    # Define variables for readability and maintainability
+    GIT_REPO=/home/barry/git/barry_website.git
+    WORK_TREE=/var/www/html
     TMP_DIR=$(mktemp -d)
+    LOGFILE=/home/barry/git/barry_website.git/hooks/post-receive.log
+    
+    # Log the start of the deployment
+    echo "Deployment started at $(date)" >> $LOGFILE
     
     # Checkout the latest code to the temporary directory
-    git --work-tree=$TMP_DIR checkout -f
+    git --work-tree=$TMP_DIR --git-dir=$GIT_REPO checkout -f >> $LOGFILE 2>&1
     
-    # Rsync the deploy directory to /var/www/html
-    rsync -av --delete $TMP_DIR/deploy/ /var/www/html/
+    # Rsync the deploy directory to /var/www/html without preserving group ownership
+    rsync -av --no-group --delete $TMP_DIR/deploy/ $WORK_TREE/ >> $LOGFILE 2>&1
     
     # Restart Apache
-    sudo systemctl restart apache2
+    sudo systemctl restart apache2 >> $LOGFILE 2>&1
     
     # Update ownership
-    sudo chown -R www-data:www-data /var/www/html
+    sudo chown -R www-data:www-data $WORK_TREE >> $LOGFILE 2>&1
     
-    # Remove the temporary directory
+    # Clean up the temporary directory
     rm -rf $TMP_DIR
+    
+    # Log the end of the deployment
+    echo "Deployment finished at $(date)" >> $LOGFILE
+
     ```
     
     **Note**: Adjust the `GIT_WORK_TREE` path if your website directory differs.
