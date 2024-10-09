@@ -94,15 +94,31 @@ Since the website uses `.shtml` files, SSI must be enabled.
     sudo mkdir -p /var/www/html
     ```
     
-2.  **Set Permissions:**
+2.  **Change ownership:** Assign ownership of the `/var/www/html/` directory and its contents to the `www-data` user and group.
     
     ```bash
-    sudo chown -R barry:barry /var/www/html
+    sudo chown -R www-data:www-data /var/www/html
     ```
     
-    **Note**: Replace `barry` with your Raspberry Pi username if different.
-    
-3.  **Enable `.shtml` Files:**
+3. **Adjust Permissions:** Grant group read and write permissions to ensure that members of the `www-data` group can modify the files.
+
+   ```bash
+   sudo chmod -R g+rw /var/www/html
+   ```
+
+4. **Set the SetGID Bit on Directories:** This ensures that new files and directories inherit the `www-data` group.
+
+    ```bash
+    sudo find /var/www/html -type d -exec chmod g+s {} \;
+    ```
+
+5. **Ensure `barry` is in the `www-data` Group:** Verify that the user `barry` is a member of the `www-data` group to inherit the necessary permissions.
+
+    ```bash
+    sudo usermod -aG www-data barry
+    ```
+
+6.  **Enable `.shtml` Files:**
     
     Edit the Apache configuration to recognize `.shtml` files.
     
@@ -116,13 +132,12 @@ Since the website uses `.shtml` files, SSI must be enabled.
     AddType text/html .shtml
     ```
     
-4.  **Restart Apache2:**
+7.  **Restart Apache2:**
     
     ```bash
     sudo systemctl restart apache2
     ```
     
-
 ### 4. Set Up Git for Automatic Deployment
 
 #### a. Install Git
