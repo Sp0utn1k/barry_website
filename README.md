@@ -186,7 +186,11 @@ To enable automatic deployment on new pushes, set up a Git post-receive hook.
     ```bash
     #!/bin/bash
     GIT_WORK_TREE=/var/www/html git checkout -f
+    
+    rsync -av --delete /home/barry/git/barry_website.git/deploy/ /var/www/html/
+    
     sudo systemctl restart apache2
+
     ```
     
     **Note**: Adjust the `GIT_WORK_TREE` path if your website directory differs.
