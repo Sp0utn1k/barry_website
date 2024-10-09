@@ -247,17 +247,6 @@ To enable automatic deployment on new pushes, set up a Git post-receive hook.
     
 -   **Managing Home Systems**: Use the website interface to control home automation features such as lights and alarms.
     
-
-## Troubleshooting
-
--   **Apache2 Not Restarting**: Ensure that the `post-receive` hook has executable permissions and that the script paths are correct.
-    
--   **Permission Issues**: Verify that the `barry` user has the necessary permissions to write to the website directory.
-    
--   **SSH Connectivity**: Ensure that SSH keys are correctly configured and that there are no network issues preventing SSH access to `barry.local`.
-    
--   **SSI Not Working**: Double-check that `mod_include` is enabled and that `.shtml` files are correctly configured in Apache.
-    
     
 
 ## License
