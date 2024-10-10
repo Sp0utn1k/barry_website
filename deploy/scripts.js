@@ -106,7 +106,7 @@ function sendValues(values) {
     isSending = true;
     var rgbwString = `${values.red} ${values.green} ${values.blue} ${values.warmWhite}\\n`;
 
-    fetch('http://barry.local:5000/sendRGBW', {
+    fetch('http://barry.local:5000/setRGBW', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
