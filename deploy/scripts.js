@@ -103,7 +103,7 @@ function sendRGBWValues() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({rgbw: rgbwString})
+        body: JSON.stringify({R: red, G: green, B: blue, W: warmWhite})
     }).then(response => {
         if (response.ok) {
             console.log('RGBW values sent:', rgbwString);
@@ -127,7 +127,7 @@ function sendRGBWValues() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({rgbw: queuedRgbwString})
+                body: JSON.stringify({R: queuedValue.red, G: queuedValue.green, B: queuedValue.blue, W: queuedValue.warmWhite})
             }).then(response => {
                 if (response.ok) {
                     console.log('Queued RGBW values sent:', queuedRgbwString);
