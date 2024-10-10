@@ -73,37 +73,45 @@ function loadPreset(preset) {
 function sendRGBWValues() {
     if (isSending) {
         // Queue the value if a request is in progress
-        queuedValue = {
-            red: document.getElementById('slider-red').value,
-            green: document.getElementById('slider-green').value,
-            blue: document.getElementById('slider-blue').value,
-            warmWhite: document.getElementById('slider-warm-white').value
-        };
+        queuedValue = getSliderValues();
         return;
     }
 
-    var red = document.getElementById('slider-red').value;
-    var green = document.getElementById('slider-green').value;
-    var blue = document.getElementById('slider-blue').value;
-    var warmWhite = document.getElementById('slider-warm-white').value;
+    var currentValues = getSliderValues();
 
     // Only send if values have changed
-    if (red == lastSentValues.red && green == lastSentValues.green && blue == lastSentValues.blue && warmWhite == lastSentValues.warmWhite) {
-        return;
+    if (hasValuesChanged(currentValues)) {
+        lastSentValues = currentValues;
+        sendValues(currentValues);
     }
+}
 
-    lastSentValues = {red: red, green: green, blue: blue, warmWhite: warmWhite};
+function getSliderValues() {
+    return {
+        red: document.getElementById('slider-red').value,
+        green: document.getElementById('slider-green').value,
+        blue: document.getElementById('slider-blue').value,
+        warmWhite: document.getElementById('slider-warm-white').value
+    };
+}
+
+function hasValuesChanged(currentValues) {
+    return currentValues.red != lastSentValues.red ||
+           currentValues.green != lastSentValues.green ||
+           currentValues.blue != lastSentValues.blue ||
+           currentValues.warmWhite != lastSentValues.warmWhite;
+}
+
+function sendValues(values) {
     isSending = true;
+    var rgbwString = `${values.red} ${values.green} ${values.blue} ${values.warmWhite}\\n`;
 
-    var rgbwString = `${red} ${green} ${blue} ${warmWhite}\\n`;
-
-    // Send the data to your backend server
     fetch('http://barry.local:5000/sendRGBW', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({R: red, G: green, B: blue, W: warmWhite})
+        body: JSON.stringify({R: values.red, G: values.green, B: values.blue, W: values.warmWhite})
     }).then(response => {
         if (response.ok) {
             console.log('RGBW values sent:', rgbwString);
@@ -117,29 +125,14 @@ function sendRGBWValues() {
 
         // Send the queued value if it exists
         if (queuedValue) {
-            lastSentValues = queuedValue;  // Update the last sent values
-            var queuedRgbwString = `${queuedValue.red} ${queuedValue.green} ${queuedValue.blue} ${queuedValue.warmWhite}\\n`;
-            queuedValue = null;  // Clear the queue
-
-            // Send the queued value
-            fetch('http://barry.local:5000/sendRGBW', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({R: queuedValue.red, G: queuedValue.green, B: queuedValue.blue, W: queuedValue.warmWhite})
-            }).then(response => {
-                if (response.ok) {
-                    console.log('Queued RGBW values sent:', queuedRgbwString);
-                } else {
-                    console.error('Failed to send queued RGBW values');
-                }
-            }).catch(error => {
-                console.error('Error sending queued RGBW values:', error);
-            });
+            var tempQueuedValue = queuedValue;
+            queuedValue = null; // Clear the queue
+            lastSentValues = tempQueuedValue;  // Update the last sent values
+            sendValues(tempQueuedValue);  // Send the queued value
         }
     });
 }
+
 
 sliders.forEach(function(s) {
     var slider = document.getElementById(s.id);
