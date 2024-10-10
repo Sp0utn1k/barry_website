@@ -148,18 +148,7 @@ If Git is not already installed, install it on the Raspberry Pi.
 sudo apt install git -y
 ```
 
-#### b. Clone the Repository
-
-Navigate to the website directory and clone your GitHub repository.
-
-```bash
-cd /var/www/html/
-git clone https://github.com/Sp0utn1k/barry_website.git .
-```
-
-**Note**: If your repository is private, set up SSH keys or use HTTPS with credentials.
-
-#### c. Configure Automatic Deployment with Git Hooks
+#### b. Configure Automatic Deployment with Git Hooks
 
 To enable automatic deployment on new pushes, set up a Git post-receive hook.
 
