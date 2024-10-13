@@ -227,7 +227,6 @@ header {
     box-sizing: border-box; /* Include padding in width */
 }
 
-
 .slider-container .color-name {
     font-size: 28px;
     margin-bottom: 10px;
@@ -253,7 +252,6 @@ header {
     border-radius: 5px;
 }
 
-/* Adjust filled portion thickness */
 .slider::-moz-range-track {
     height: 25px;
     border-radius: 5px;
@@ -287,7 +285,6 @@ header {
 }
 
 /* Custom thumb colors */
-/* RED Slider Thumb Color */
 .slider-red::-webkit-slider-thumb {
     background: #a50f01;
 }
@@ -296,7 +293,6 @@ header {
     background: #a50f01;
 }
 
-/* GREEN Slider Thumb Color */
 .slider-green::-webkit-slider-thumb {
     background: #299e37;
 }
@@ -305,7 +301,6 @@ header {
     background: #299e37;
 }
 
-/* BLUE Slider Thumb Color */
 .slider-blue::-webkit-slider-thumb {
     background: #4d8dd6;
 }
@@ -314,7 +309,6 @@ header {
     background: #4d8dd6;
 }
 
-/* WARM WHITE Slider Thumb Color */
 .slider-warm-white::-webkit-slider-thumb {
     background: #ffeac1;
 }
@@ -322,8 +316,6 @@ header {
 .slider-warm-white::-moz-range-thumb {
     background: #ffeac1;
 }
-
-/* Note: To customize the slider thumb colors, change the 'background' property under each '.slider-<color>::-webkit-slider-thumb' and '.slider-<color>::-moz-range-thumb' selector above. */
 
 /* Text styles for color names */
 .text-block-red, .text-block-green, .text-block-blue, .text-block-warm-white {
@@ -483,7 +475,7 @@ header {
     text-decoration: none;
 }
 
-.confirm-button, .cancel-button {
+.confirm-button, .cancel-button, .save-button, .rename-button {
     padding: 10px 20px;
     margin: 10px 5px;
     border: none;
@@ -510,6 +502,31 @@ header {
     background-color: #999;
 }
 
+.save-button {
+    background-color: #299e37;
+    color: #fff;
+}
+
+.save-button:hover {
+    background-color: #1e7a29;
+}
+
+.rename-button {
+    background-color: #299e37;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rename-button:hover {
+    background-color: #1e7a29;
+}
+
 #new-sequence-name {
     width: 80%;
     padding: 10px;
@@ -517,4 +534,186 @@ header {
     font-size: 18px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+/* Modify Sequence Page Styles */
+#modify-sequence-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.rename-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+#sequence-name-input {
+    flex: 1;
+    padding: 10px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.rename-button {
+    margin-left: 10px;
+}
+
+#colors-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.color-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+}
+
+.color-item .color-name {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.color-item .delete-icon {
+    margin-left: 20px;
+}
+
+.color-item .options-icon {
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.color-dropdown {
+    display: none;
+    flex-direction: column;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ccc;
+}
+
+.color-dropdown .slider-container {
+    margin-bottom: 15px;
+}
+
+.save-button {
+    align-self: flex-end;
+}
+
+.options-menu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.options-menu a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.options-menu a:hover {
+    background-color: #e0e0e0;
+}
+
+/* Presets List Styles (if applicable) */
+.preset-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.preset-container span {
+    font-size: 20px;
+}
+
+.preset-container button {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #299e37;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.preset-container button:hover {
+    background-color: #1e7a29;
+}
+
+/* Color Dropdown Slider Styles (Modify Sequence Page) */
+.color-dropdown .slider {
+    width: 100%;
+}
+
+.color-dropdown label {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.color-dropdown input[type="range"] {
+    width: 100%;
+}
+
+/* Options Menu Button */
+.options-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Ensure that option menus appear above other elements */
+.options-menu {
+    z-index: 1001;
+}
+
+/* Responsive Adjustments for Modify Sequence Page */
+@media screen and (max-width: 1024px) {
+    #modify-sequence-container {
+        padding: 10px;
+    }
+
+    .rename-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #sequence-name-input {
+        margin-bottom: 10px;
+    }
+
+    .rename-button {
+        width: 50px;
+        height: 50px;
+        align-self: flex-end;
+    }
+
+    .color-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .color-item .delete-icon, .color-item .options-icon {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .options-menu {
+        right: 10px;
+    }
 }

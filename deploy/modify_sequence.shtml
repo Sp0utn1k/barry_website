@@ -1,0 +1,39 @@
+<!-- modify_sequence.shtml -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier Séquence</title>
+    <link href="https://fonts.googleapis.com/css?family=Changa+One|Oswald&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--#include virtual="header.html" -->
+    
+    <div id="modify-sequence-container">
+        <div class="rename-container">
+            <input type="text" id="sequence-name-input" placeholder="Nom de la séquence">
+            <button id="rename-button" class="rename-button">V</button>
+        </div>
+
+        <ul id="colors-list">
+            <!-- Colors will be dynamically populated here -->
+        </ul>
+
+        <button id="add-color-button" class="add-button">+</button>
+    </div>
+
+    <!-- Option Menu for Colors -->
+    <div id="option-menu" class="options-menu">
+        <a href="#" onclick="moveColor(currentColorIndex, 'move_to_start')">Déplacer au début</a>
+        <a href="#" onclick="moveColor(currentColorIndex, 'move_up')">Monter de 1</a>
+        <a href="#" onclick="moveColor(currentColorIndex, 'move_down')">Descendre de 1</a>
+        <a href="#" onclick="moveColor(currentColorIndex, 'move_to_end')">Déplacer à la fin</a>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/modify_sequence.js"></script>
+</body>
+</html>
