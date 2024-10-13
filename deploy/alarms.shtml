@@ -15,8 +15,7 @@
         <ul id="alarms-list">
             <!-- Alarms will be dynamically populated here -->
         </ul>
-        <!-- Optional: Button to add a new alarm -->
-        <button id="add-alarm-button" class="add-button">+</button>
+        <button id="add-alarm-button" class="add-button" title="Ajouter une Alarme">+</button>
     </div>
 
     <!-- Add Alarm Modal -->
@@ -41,6 +40,16 @@
 
                 <button type="submit" class="save-button">Créer</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-alarm-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="delete-alarm-close">&times;</span>
+            <p>Êtes-vous certain de vouloir supprimer l'alarme <span id="alarm-to-delete"></span>?</p>
+            <button id="confirm-delete-alarm" class="confirm-button">Oui</button>
+            <button id="cancel-delete-alarm" class="cancel-button">Non</button>
         </div>
     </div>
 

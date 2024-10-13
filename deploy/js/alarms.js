@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchAlarms();
     fetchSequences(); // To populate the sequence dropdown in the add alarm modal
     setupAddAlarmModal();
+    setupDeleteAlarmModal();
 });
 
 // Function to fetch and display all alarms
@@ -33,9 +34,15 @@ function fetchAlarms() {
                 sequenceSpan.textContent = alarm.sequence_name;
                 listItem.appendChild(sequenceSpan);
 
+                // Alarm Duration
+                const durationSpan = document.createElement('span');
+                durationSpan.className = 'alarm-duration';
+                durationSpan.textContent = `${convertSecondsToMinutes(alarm.duration)} min`;
+                listItem.appendChild(durationSpan);
+
                 // Active Toggle
                 const toggleLabel = document.createElement('label');
-                toggleLabel.className = 'switch';
+                toggleLabel.className = 'toggle-switch';
 
                 const toggleInput = document.createElement('input');
                 toggleInput.type = 'checkbox';
@@ -43,11 +50,24 @@ function fetchAlarms() {
                 toggleInput.dataset.alarmId = alarm.id; // Assuming each alarm has a unique 'id'
 
                 const toggleSpan = document.createElement('span');
-                toggleSpan.className = 'slider round';
+                toggleSpan.className = 'toggle-slider round';
 
                 toggleLabel.appendChild(toggleInput);
                 toggleLabel.appendChild(toggleSpan);
                 listItem.appendChild(toggleLabel);
+
+                // Delete Icon
+                const deleteIcon = document.createElement('span');
+                deleteIcon.className = 'delete-icon';
+                deleteIcon.innerHTML = '&#128465;'; // Trash can icon
+                deleteIcon.title = 'Supprimer l\'alarme';
+                deleteIcon.dataset.alarmId = alarm.id;
+
+                deleteIcon.addEventListener('click', function() {
+                    openDeleteAlarmModal(alarm.id, alarm.time);
+                });
+
+                listItem.appendChild(deleteIcon);
 
                 // Event Listener for Toggle
                 toggleInput.addEventListener('change', function() {
@@ -67,6 +87,16 @@ function fetchAlarms() {
 function formatTime(timeString) {
     // Assuming timeString is in "HH:MM" format
     return timeString;
+}
+
+// Function to convert seconds to minutes (rounded)
+function convertSecondsToMinutes(seconds) {
+    return Math.round(seconds / 60);
+}
+
+// Function to convert minutes to seconds
+function convertMinutesToSeconds(minutes) {
+    return minutes * 60;
 }
 
 // Function to update the 'active' status of an alarm
@@ -163,18 +193,19 @@ function setupAddAlarmModal() {
         event.preventDefault();
 
         const time = document.getElementById('alarm-time').value;
-        const duration = parseInt(document.getElementById('alarm-duration').value, 10);
+        const durationMinutes = parseInt(document.getElementById('alarm-duration').value, 10);
+        const durationSeconds = convertMinutesToSeconds(durationMinutes);
         const sequenceName = document.getElementById('alarm-sequence').value;
         const repeat = document.getElementById('alarm-repeat').checked;
 
-        if (!time || !duration || !sequenceName) {
+        if (!time || isNaN(durationMinutes) || !sequenceName) {
             alert('Veuillez remplir tous les champs requis.');
             return;
         }
 
         const newAlarm = {
             time: time,
-            duration: duration,
+            duration: durationSeconds, // Send duration in seconds to backend
             sequence_name: sequenceName,
             active: false, // Default to inactive
             repeat: repeat
@@ -206,5 +237,74 @@ function setupAddAlarmModal() {
             console.error('Erreur:', error);
             alert(`Erreur lors de la création de l\'alarme: ${error.message}`);
         });
+    });
+}
+
+// Function to open the Delete Alarm Modal
+function openDeleteAlarmModal(alarmId, alarmTime) {
+    const deleteAlarmModal = document.getElementById('delete-alarm-modal');
+    const alarmToDeleteSpan = document.getElementById('alarm-to-delete');
+    alarmToDeleteSpan.textContent = `${alarmTime}`;
+
+    deleteAlarmModal.style.display = 'block';
+
+    const confirmDeleteBtn = document.getElementById('confirm-delete-alarm');
+    const cancelDeleteBtn = document.getElementById('cancel-delete-alarm');
+
+    // Remove existing event listeners to prevent multiple triggers
+    confirmDeleteBtn.replaceWith(confirmDeleteBtn.cloneNode(true));
+    cancelDeleteBtn.replaceWith(cancelDeleteBtn.cloneNode(true));
+
+    // Re-select the buttons after cloning
+    const newConfirmDeleteBtn = document.getElementById('confirm-delete-alarm');
+    const newCancelDeleteBtn = document.getElementById('cancel-delete-alarm');
+
+    newConfirmDeleteBtn.addEventListener('click', function() {
+        deleteAlarm(alarmId);
+    });
+
+    newCancelDeleteBtn.addEventListener('click', function() {
+        deleteAlarmModal.style.display = 'none';
+    });
+}
+
+// Function to set up the Delete Alarm Modal functionality
+function setupDeleteAlarmModal() {
+    const deleteAlarmModal = document.getElementById('delete-alarm-modal');
+    const deleteAlarmClose = document.getElementById('delete-alarm-close');
+
+    // Close the modal when the close button is clicked
+    deleteAlarmClose.addEventListener('click', function() {
+        deleteAlarmModal.style.display = 'none';
+    });
+
+    // Close the modal when clicking outside the modal content
+    window.addEventListener('click', function(event) {
+        if (event.target == deleteAlarmModal) {
+            deleteAlarmModal.style.display = 'none';
+        }
+    });
+}
+
+// Function to delete an alarm
+function deleteAlarm(alarmId) {
+    fetch(`http://barry.local:5000/alarms/${encodeURIComponent(alarmId)}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log(`Alarme ${alarmId} supprimée.`);
+            const deleteAlarmModal = document.getElementById('delete-alarm-modal');
+            deleteAlarmModal.style.display = 'none';
+            fetchAlarms(); // Refresh the alarms list
+        } else {
+            return response.json().then(data => {
+                throw new Error(data.error || 'Erreur inconnue lors de la suppression de l\'alarme.');
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        alert(`Erreur lors de la suppression de l\'alarme: ${error.message}`);
     });
 }

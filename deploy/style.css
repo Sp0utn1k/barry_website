@@ -459,11 +459,11 @@ header {
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 10% auto; /* 10% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
-    max-width: 400px; /* Could be more or less, depending on screen size */
+    width: 90%;
+    max-width: 500px; /* Adjusted for better mobile responsiveness */
     border-radius: 8px;
     text-align: center;
 }
@@ -510,8 +510,8 @@ header {
 }
 
 .save-button {
-    margin-top: 10px;
-    padding: 8px 16px;
+    margin-top: 20px;
+    padding: 10px 20px;
     background-color: #299e37;
     color: #fff;
     border: none;
@@ -782,7 +782,7 @@ header {
 }
 
 /* Toggle Switch Styles */
-.switch {
+.toggle-switch {
     position: relative;
     display: inline-block;
     width: 60px;
@@ -790,13 +790,13 @@ header {
     margin-left: 20px;
 }
 
-.switch input { 
+.toggle-switch input { 
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.slider {
+.toggle-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -808,7 +808,7 @@ header {
     border-radius: 34px;
 }
 
-.slider:before {
+.toggle-slider:before {
     position: absolute;
     content: "";
     height: 26px;
@@ -820,15 +820,15 @@ header {
     border-radius: 50%;
 }
 
-input:checked + .slider {
+.toggle-switch input:checked + .toggle-slider {
     background-color: #299e37;
 }
 
-input:focus + .slider {
+.toggle-switch input:focus + .toggle-slider {
     box-shadow: 0 0 1px #299e37;
 }
 
-input:checked + .slider:before {
+.toggle-switch input:checked + .toggle-slider:before {
     transform: translateX(26px);
 }
 
@@ -849,6 +849,22 @@ input:checked + .slider:before {
 .alarm-sequence {
     flex: 2;
     text-align: center;
+}
+
+.alarm-duration {
+    flex: 1;
+    text-align: center;
+}
+
+/* Delete Alarm Icon Styles */
+.delete-icon {
+    color: #a50f01; /* Matching the red color from slider */
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.delete-icon:hover {
+    color: #ff0000;
 }
 
 /* Add Alarm Modal Styles */
@@ -877,7 +893,7 @@ input:checked + .slider:before {
 
 #add-alarm-form .save-button {
     margin-top: 20px;
-    padding: 10px;
+    padding: 10px 20px;
     background-color: #299e37;
     color: #fff;
     border: none;
@@ -887,4 +903,31 @@ input:checked + .slider:before {
 
 #add-alarm-form .save-button:hover {
     background-color: #1e7a29;
+}
+
+/* Delete Alarm Modal Styles */
+#delete-alarm-modal .modal-content {
+    max-width: 400px;
+}
+
+#delete-alarm-modal p {
+    font-size: 18px;
+}
+
+#delete-alarm-modal .confirm-button {
+    background-color: #a50f01;
+    color: #fff;
+}
+
+#delete-alarm-modal .confirm-button:hover {
+    background-color: #ff0000;
+}
+
+#delete-alarm-modal .cancel-button {
+    background-color: #ccc;
+    color: #000;
+}
+
+#delete-alarm-modal .cancel-button:hover {
+    background-color: #999;
 }
