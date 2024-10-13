@@ -150,3 +150,187 @@ sliders.forEach(function(s) {
         sendRGBWValues();
     });
 });
+
+// scripts.js
+
+// Function to fetch and display all sequences
+function fetchSequences() {
+    fetch('/sequences/')
+        .then(response => response.json())
+        .then(data => {
+            const sequencesList = document.getElementById('sequences-list');
+            sequencesList.innerHTML = ''; // Clear existing list
+
+            data.forEach(sequence => {
+                const listItem = document.createElement('li');
+                listItem.className = 'sequence-item';
+
+                // Sequence Name (Clickable)
+                const sequenceLink = document.createElement('a');
+                sequenceLink.textContent = sequence.sequence_name;
+                sequenceLink.href = `modify_sequence.shtml?name=${encodeURIComponent(sequence.sequence_name)}`; // Redirect to modify page
+                listItem.appendChild(sequenceLink);
+
+                // Delete Icon
+                const deleteIcon = document.createElement('span');
+                deleteIcon.className = 'delete-icon';
+                deleteIcon.innerHTML = '&#128465;'; // Trash can icon (Unicode)
+                deleteIcon.title = 'Supprimer la séquence';
+                deleteIcon.onclick = () => openDeleteModal(sequence.sequence_name);
+                listItem.appendChild(deleteIcon);
+
+                sequencesList.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching sequences:', error);
+            alert('Erreur lors du chargement des séquences.');
+        });
+}
+
+// Function to open the delete confirmation modal
+function openDeleteModal(sequenceName) {
+    const deleteModal = document.getElementById('delete-modal');
+    const sequenceToDelete = document.getElementById('sequence-to-delete');
+    sequenceToDelete.textContent = sequenceName;
+    deleteModal.style.display = 'block';
+
+    // Set up confirm and cancel buttons
+    const confirmDeleteBtn = document.getElementById('confirm-delete');
+    const cancelDeleteBtn = document.getElementById('cancel-delete');
+
+    // Remove any existing event listeners to prevent multiple bindings
+    confirmDeleteBtn.replaceWith(confirmDeleteBtn.cloneNode(true));
+    cancelDeleteBtn.replaceWith(cancelDeleteBtn.cloneNode(true));
+
+    document.getElementById('confirm-delete').onclick = () => {
+        deleteSequence(sequenceName);
+    };
+
+    document.getElementById('cancel-delete').onclick = () => {
+        deleteModal.style.display = 'none';
+    };
+}
+
+// Function to delete a sequence
+function deleteSequence(sequenceName) {
+    fetch(`/sequences/${encodeURIComponent(sequenceName)}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (response.ok) {
+            alert(`La séquence "${sequenceName}" a été supprimée.`);
+            location.reload(); // Reload the page to update the list
+        } else {
+            return response.json().then(data => {
+                throw new Error(data.error || 'Erreur inconnue.');
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting sequence:', error);
+        alert(`Erreur lors de la suppression de la séquence: ${error.message}`);
+    });
+}
+
+// Function to open the add sequence modal
+function openAddModal() {
+    const addModal = document.getElementById('add-modal');
+    addModal.style.display = 'block';
+
+    // Set up confirm and close buttons
+    const confirmAddBtn = document.getElementById('confirm-add');
+    const cancelAddBtn = document.getElementById('add-close');
+
+    // Remove any existing event listeners to prevent multiple bindings
+    confirmAddBtn.replaceWith(confirmAddBtn.cloneNode(true));
+    cancelAddBtn.replaceWith(cancelAddBtn.cloneNode(true));
+
+    document.getElementById('confirm-add').onclick = () => {
+        const sequenceNameInput = document.getElementById('new-sequence-name');
+        const newSequenceName = sequenceNameInput.value.trim();
+
+        if (newSequenceName === '') {
+            alert('Le nom de la séquence ne peut pas être vide.');
+            return;
+        }
+
+        // Check if the sequence name already exists
+        fetch('/sequences/')
+            .then(response => response.json())
+            .then(data => {
+                const exists = data.some(seq => seq.sequence_name.toLowerCase() === newSequenceName.toLowerCase());
+                if (exists) {
+                    alert('Une séquence avec ce nom existe déjà.');
+                } else {
+                    createSequence(newSequenceName);
+                }
+            })
+            .catch(error => {
+                console.error('Error checking existing sequences:', error);
+                alert('Erreur lors de la vérification des séquences existantes.');
+            });
+    };
+
+    // Close modal when clicking on the close (x) button
+    document.getElementById('add-close').onclick = () => {
+        addModal.style.display = 'none';
+    };
+}
+
+// Function to create a new sequence
+function createSequence(sequenceName) {
+    fetch('/sequences/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            sequence_name: sequenceName,
+            colors: [] // Empty sequence
+        })
+    })
+    .then(response => {
+        if (response.status === 201) {
+            alert(`La séquence "${sequenceName}" a été créée.`);
+            location.reload(); // Reload the page to update the list
+        } else {
+            return response.json().then(data => {
+                throw new Error(data.error || 'Erreur inconnue.');
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error creating sequence:', error);
+        alert(`Erreur lors de la création de la séquence: ${error.message}`);
+    });
+}
+
+// Function to initialize event listeners
+function initializeSequencesPage() {
+    fetchSequences();
+
+    // Add Sequence Button
+    const addSequenceButton = document.getElementById('add-sequence-button');
+    addSequenceButton.onclick = openAddModal;
+
+    // Close modals when clicking outside of them
+    window.onclick = function(event) {
+        const deleteModal = document.getElementById('delete-modal');
+        const addModal = document.getElementById('add-modal');
+        if (event.target == deleteModal) {
+            deleteModal.style.display = 'none';
+        }
+        if (event.target == addModal) {
+            addModal.style.display = 'none';
+        }
+    };
+}
+
+// Initialize the Sequences page when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if the current page is sequences.shtml
+    if (window.location.pathname.endsWith('sequences.shtml')) {
+        initializeSequencesPage();
+    }
+});

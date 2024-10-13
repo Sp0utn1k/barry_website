@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Séquences</title>
+    <link href="https://fonts.googleapis.com/css?family=Changa+One|Oswald&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--#include virtual="header.html" -->
+    
+    <div id="sequences-container">
+        <h2>Séquences Existantes</h2>
+        <ul id="sequences-list">
+            <!-- Sequences will be dynamically populated here -->
+        </ul>
+        <button id="add-sequence-button" class="add-button">+</button>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="delete-close">&times;</span>
+            <p id="delete-message">Êtes-vous certain de vouloir supprimer la séquence <span id="sequence-to-delete"></span>?</p>
+            <button id="confirm-delete" class="confirm-button">Oui</button>
+            <button id="cancel-delete" class="cancel-button">Non</button>
+        </div>
+    </div>
+
+    <!-- Add Sequence Modal -->
+    <div id="add-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="add-close">&times;</span>
+            <p>Quel est le nom de la nouvelle séquence ?</p>
+            <input type="text" id="new-sequence-name" placeholder="Nom de la séquence">
+            <button id="confirm-add" class="confirm-button">Confirmer</button>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
