@@ -62,7 +62,6 @@ function deleteSequence(sequenceName) {
     })
     .then(response => {
         if (response.ok) {
-            alert(`La séquence "${sequenceName}" a été supprimée.`);
             location.reload();
         } else {
             return response.json().then(data => {
@@ -89,7 +88,6 @@ function createSequence(sequenceName) {
     })
     .then(response => {
         if (response.status === 201) {
-            alert(`La séquence "${sequenceName}" a été créée.`);
             location.reload();
         } else {
             return response.json().then(data => {
