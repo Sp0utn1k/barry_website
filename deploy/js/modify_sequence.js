@@ -39,19 +39,25 @@ function populateSequenceData(oldName, data) {
         colorName.onclick = () => toggleColorDropdown(index);
         colorItem.appendChild(colorName);
 
+        // Icons Container
+        const iconsContainer = document.createElement('div');
+        iconsContainer.className = 'icons-container';
+
         const deleteIcon = document.createElement('span');
         deleteIcon.className = 'delete-icon';
         deleteIcon.innerHTML = '&#128465;';
         deleteIcon.title = 'Supprimer la couleur';
         deleteIcon.onclick = () => deleteColor(index);
-        colorItem.appendChild(deleteIcon);
+        iconsContainer.appendChild(deleteIcon);
 
         const optionsButton = document.createElement('span');
         optionsButton.className = 'options-icon';
         optionsButton.innerHTML = '&#9776;';
         optionsButton.title = 'Options';
         optionsButton.onclick = () => toggleOptionsMenu(index);
-        colorItem.appendChild(optionsButton);
+        iconsContainer.appendChild(optionsButton);
+
+        colorItem.appendChild(iconsContainer);
 
         // Dropdown for editing color
         const dropdown = document.createElement('div');
@@ -78,7 +84,7 @@ function populateSequenceData(oldName, data) {
             slider.id = `slider-${channel}-${index}`;
             slider.className = `slider slider-${channel.toLowerCase()}`;
             slider.oninput = () => updateSliderBackground(slider, getChannelColor(channel));
-            slider.onchange = () => sendRGBWForColor(index);
+            // Remove onchange handler to prevent immediate sending
             sliderContainer.appendChild(slider);
 
             dropdown.appendChild(sliderContainer);
@@ -130,9 +136,25 @@ function populateSequenceData(oldName, data) {
 }
 
 function getColorHex(color) {
-    const r = Math.round(color.R / 32767 * 255);
-    const g = Math.round(color.G / 32767 * 255);
-    const b = Math.round(color.B / 32767 * 255);
+    let newR = color.R + color.W;
+    let newG = color.G + color.W;
+    let newB = color.B + color.W;
+
+    // Calculate the maximum value to check for overflow
+    let max = Math.max(newR, newG, newB);
+
+    // If any channel exceeds 32767, scale all channels proportionally
+    if (max > 32767) {
+        let factor = 32767 / max;
+        newR = Math.round(newR * factor);
+        newG = Math.round(newG * factor);
+        newB = Math.round(newB * factor);
+    }
+
+    // Convert to 8-bit RGB for CSS
+    const r = Math.round(newR / 32767 * 255);
+    const g = Math.round(newG / 32767 * 255);
+    const b = Math.round(newB / 32767 * 255);
     return `rgb(${r}, ${g}, ${b})`;
 }
 
@@ -148,7 +170,7 @@ function getChannelColor(channel) {
 
 function toggleColorDropdown(index) {
     const dropdown = document.getElementById(`color-dropdown-${index}`);
-    if (dropdown.style.display === 'none') {
+    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
         dropdown.style.display = 'block';
     } else {
         dropdown.style.display = 'none';
@@ -189,22 +211,21 @@ function sendRGBWForColor(index) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({colors: data})
+                body: JSON.stringify({ colors: data })
             });
         })
         .then(response => {
             if (response.ok) {
-                alert('Couleur mise à jour avec succès.');
-                location.reload();
+                location.reload(); // Refresh the page without alert
             } else {
                 return response.json().then(data => {
-                    throw new Error(data.error || 'Erreur inconnue lors de la mise à jour de la couleur.');
+                    throw new Error(data.error || 'Unknown error while updating color.');
                 });
             }
         })
         .catch(error => {
             console.error('Error updating color:', error);
-            alert(`Erreur lors de la mise à jour de la couleur: ${error.message}`);
+            alert(`Error updating color: ${error.message}`); // Retain alerts for errors
         });
 }
 
@@ -229,26 +250,34 @@ function deleteColor(index) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({colors: data})
+                body: JSON.stringify({ colors: data })
             });
         })
         .then(response => {
             if (response.ok) {
-                alert('Couleur supprimée avec succès.');
-                location.reload();
+                location.reload(); // Refresh the page without alert
             } else {
                 return response.json().then(data => {
-                    throw new Error(data.error || 'Erreur inconnue.');
+                    throw new Error(data.error || 'Unknown error.');
                 });
             }
         })
         .catch(error => {
             console.error('Error deleting color:', error);
-            alert(`Erreur lors de la suppression de la couleur: ${error.message}`);
+            alert(`Error deleting color: ${error.message}`); // Retain alerts for errors
         });
 }
 
 function toggleOptionsMenu(index) {
+    // Close all other options menus
+    const allOptionsMenus = document.querySelectorAll('.options-menu');
+    allOptionsMenus.forEach(menu => {
+        if (menu.id !== `options-menu-${index}`) {
+            menu.style.display = 'none';
+        }
+    });
+
+    // Toggle the selected options menu
     const optionsMenu = document.getElementById(`options-menu-${index}`);
     if (optionsMenu.style.display === 'none' || optionsMenu.style.display === '') {
         optionsMenu.style.display = 'block';
@@ -288,23 +317,93 @@ function moveColor(index, action) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({colors: data})
+                body: JSON.stringify({ colors: data })
             });
         })
         .then(response => {
             if (response.ok) {
-                alert('Couleur déplacée avec succès.');
-                location.reload();
+                location.reload(); // Refresh the page without alert
             } else {
                 return response.json().then(data => {
-                    throw new Error(data.error || 'Erreur inconnue lors du déplacement de la couleur.');
+                    throw new Error(data.error || 'Unknown error while moving color.');
                 });
             }
         })
         .catch(error => {
             console.error('Error moving color:', error);
-            alert(`Erreur lors du déplacement de la couleur: ${error.message}`);
+            alert(`Error moving color: ${error.message}`); // Retain alerts for errors
         });
+}
+
+function createSequence(sequenceName) {
+    fetch('http://barry.local:5000/sequences/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            sequence_name: sequenceName,
+            colors: [{ R: 0, G: 0, B: 0, W: 0 }] // Initialize with one black color
+        })
+    })
+    .then(response => {
+        if (response.status === 201) {
+            location.reload(); // Refresh the page without alert
+        } else {
+            return response.json().then(data => {
+                throw new Error(data.error || 'Unknown error.');
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error creating sequence:', error);
+        alert(`Error creating sequence: ${error.message}`); // Retain alerts for errors
+    });
+}
+
+function openAddModal() {
+    const addModal = document.getElementById('add-modal');
+    addModal.style.display = 'block';
+
+    const confirmAddBtn = document.getElementById('confirm-add');
+    const cancelAddBtn = document.getElementById('cancel-delete');
+
+    confirmAddBtn.replaceWith(confirmAddBtn.cloneNode(true));
+    cancelAddBtn.replaceWith(cancelAddBtn.cloneNode(true));
+
+    document.getElementById('confirm-add').onclick = () => {
+        const sequenceNameInput = document.getElementById('new-sequence-name');
+        const newSequenceName = sequenceNameInput.value.trim();
+
+        if (newSequenceName === '') {
+            alert('Le nom de la séquence ne peut pas être vide.');
+            return;
+        }
+
+        fetch('http://barry.local:5000/sequences/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const exists = Object.keys(data).some(seq => seq.toLowerCase() === newSequenceName.toLowerCase());
+                if (exists) {
+                    alert('Une séquence avec ce nom existe déjà.');
+                } else {
+                    createSequence(newSequenceName);
+                }
+            })
+            .catch(error => {
+                console.error('Error checking existing sequences:', error);
+                alert('Erreur lors de la vérification des séquences existantes.');
+            });
+    };
+
+    document.getElementById('cancel-delete').onclick = () => {
+        addModal.style.display = 'none';
+    };
 }
 
 function renameSequence(oldName, newName) {
@@ -347,8 +446,8 @@ function renameSequence(oldName, newName) {
         })
         .then(response => {
             if (response.ok) {
-                alert('Séquence renommée avec succès.');
-                window.location.reload();
+                // Redirect to the modify_sequence page with the new name
+                window.location.href = `modify_sequence.shtml?name=${encodeURIComponent(newName)}`;
             } else {
                 return response.json().then(data => {
                     throw new Error(data.error || 'Erreur inconnue lors de la suppression de l\'ancienne séquence.');
@@ -357,7 +456,7 @@ function renameSequence(oldName, newName) {
         })
         .catch(error => {
             console.error('Error renaming sequence:', error);
-            alert(`Erreur lors du renommage de la séquence: ${error.message}`);
+            alert(`Erreur lors du renommage de la séquence: ${error.message}`); // Retain alerts for errors
         });
 }
 
@@ -372,22 +471,21 @@ function addColor() {
             return response.json();
         })
         .then(data => {
-            data.push({R: 0, G: 0, B: 0, W: 0});
+            data.push({ R: 0, G: 0, B: 0, W: 0 });
             return fetch(`http://barry.local:5000/sequences/${encodeURIComponent(sequenceName)}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({colors: data})
+                body: JSON.stringify({ colors: data })
             });
         })
         .then(response => {
             if (response.ok) {
-                alert('Nouvelle couleur ajoutée avec succès.');
-                location.reload();
+                location.reload(); // Refresh the page without alert
             } else {
                 return response.json().then(data => {
-                    throw new Error(data.error || 'Erreur inconnue lors de l\'ajout de la couleur.');
+                    throw new Error(data.error || 'Unknown error while adding color.');
                 });
             }
         })
@@ -412,7 +510,7 @@ function initializeModifySequencePage() {
 
     const addColorButton = document.getElementById('add-color-button');
     if (addColorButton) {
-        addColorButton.onclick = addColor;
+        addColorButton.onclick = openAddModal;
     }
 }
 

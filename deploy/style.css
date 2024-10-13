@@ -554,7 +554,12 @@ header {
     margin-bottom: 30px;
 }
 
-#sequence-name-input {
+.rename-container form {
+    display: flex;
+    align-items: center;
+}
+
+.rename-container input[type="text"] {
     flex: 1;
     padding: 10px;
     font-size: 20px;
@@ -563,7 +568,23 @@ header {
 }
 
 .rename-button {
-    margin-left: 10px;
+    margin-left: 10px; /* Space between input and button */
+    width: 50px;
+    height: 50px;
+    background-color: #299e37;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.rename-button:hover {
+    background-color: #1e7a29;
 }
 
 #colors-list {
@@ -586,12 +607,36 @@ header {
     cursor: pointer;
 }
 
-.color-item .delete-icon,
-.color-item .options-icon {
-    margin-left: 10px;
-    cursor: pointer;
+/* Icons Container */
+.icons-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
+/* Delete and Options Icons */
+.delete-icon, .options-icon {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.delete-icon {
+    color: #a50f01; /* Matching the red color from slider */
+}
+
+.delete-icon:hover {
+    color: #ff0000;
+}
+
+.options-icon {
+    color: #000;
+}
+
+.options-icon:hover {
+    color: #555;
+}
+
+/* Dropdown for Editing Color */
 .color-dropdown {
     margin-top: 10px;
     padding: 10px;
@@ -604,10 +649,12 @@ header {
     margin-bottom: 15px;
 }
 
-.save-button {
+/* Save Button within Dropdown */
+.color-dropdown .save-button {
     align-self: flex-end;
 }
 
+/* Options Menu */
 .options-menu {
     position: absolute;
     top: 100%;
@@ -617,7 +664,7 @@ header {
     border-radius: 4px;
     display: none;
     flex-direction: column;
-    z-index: 100;
+    z-index: 1001;
 }
 
 .options-menu a {
@@ -669,17 +716,6 @@ header {
 
 .color-dropdown input[type="range"] {
     width: 100%;
-}
-
-/* Options Menu Button */
-.options-icon {
-    font-size: 24px;
-    cursor: pointer;
-}
-
-/* Ensure that option menus appear above other elements */
-.options-menu {
-    z-index: 1001;
 }
 
 /* Responsive Adjustments for Modify Sequence Page */
