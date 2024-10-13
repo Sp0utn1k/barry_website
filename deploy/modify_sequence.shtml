@@ -29,7 +29,6 @@
         <!-- Add Color and Enregistrer Buttons -->
         <div class="buttons-container">
             <button id="add-color-button" class="add-button">+</button>
-            <button id="save-sequence-button" class="save-button">Enregistrer</button>
         </div>
     </div>
 
