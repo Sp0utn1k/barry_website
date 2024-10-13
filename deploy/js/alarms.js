@@ -1,5 +1,3 @@
-// js/alarms.js
-
 document.addEventListener('DOMContentLoaded', function() {
     fetchAlarms();
     fetchSequences(); // To populate the sequence dropdown in the add alarm modal
@@ -110,12 +108,25 @@ function fetchSequences() {
             const sequenceSelect = document.getElementById('alarm-sequence');
             sequenceSelect.innerHTML = ''; // Clear existing options
 
-            data.forEach(sequence => {
-                const option = document.createElement('option');
-                option.value = sequence.name; // Assuming each sequence has a 'name' field
-                option.textContent = sequence.name;
-                sequenceSelect.appendChild(option);
-            });
+            // Check if data is an object
+            if (typeof data === 'object' && !Array.isArray(data)) {
+                Object.keys(data).forEach(sequenceName => {
+                    const option = document.createElement('option');
+                    option.value = sequenceName;
+                    option.textContent = sequenceName;
+                    sequenceSelect.appendChild(option);
+                });
+            } else if (Array.isArray(data)) {
+                data.forEach(sequence => {
+                    const option = document.createElement('option');
+                    option.value = sequence.name; // Adjust based on actual structure
+                    option.textContent = sequence.name;
+                    sequenceSelect.appendChild(option);
+                });
+            } else {
+                console.error('Format de données inattendu pour les séquences:', data);
+                alert('Format de données des séquences non supporté.');
+            }
         })
         .catch(error => {
             console.error('Erreur:', error);
