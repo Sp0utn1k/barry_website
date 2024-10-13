@@ -28,7 +28,8 @@
         </div>
     </div>
 
-    <script src="scripts.js"></script>
-    <script src="menu.js"></script>
+    <script src="common.js"></script>
+    <script src="lampe_chambre.js"></script>
+
 </body>
 </html>
