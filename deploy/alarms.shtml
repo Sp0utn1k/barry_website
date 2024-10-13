@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barry - Alarmes</title>
+    <link href="https://fonts.googleapis.com/css?family=Changa+One|Oswald&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--#include virtual="header.html" -->
+
+    <div id="alarms-container">
+        <h2>Alarmes Existantes</h2>
+        <ul id="alarms-list">
+            <!-- Alarms will be dynamically populated here -->
+        </ul>
+        <!-- Optional: Button to add a new alarm -->
+        <button id="add-alarm-button" class="add-button">+</button>
+    </div>
+
+    <!-- Add Alarm Modal -->
+    <div id="add-alarm-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="add-alarm-close">&times;</span>
+            <h3>Créer une Nouvelle Alarme</h3>
+            <form id="add-alarm-form">
+                <label for="alarm-time">Heure:</label>
+                <input type="time" id="alarm-time" name="alarm-time" required>
+
+                <label for="alarm-duration">Durée (minutes):</label>
+                <input type="number" id="alarm-duration" name="alarm-duration" min="1" required>
+
+                <label for="alarm-sequence">Séquence:</label>
+                <select id="alarm-sequence" name="alarm-sequence" required>
+                    <!-- Sequences will be populated dynamically -->
+                </select>
+
+                <label for="alarm-repeat">Répéter:</label>
+                <input type="checkbox" id="alarm-repeat" name="alarm-repeat">
+
+                <button type="submit" class="save-button">Créer</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/alarms.js"></script>
+</body>
+</html>
