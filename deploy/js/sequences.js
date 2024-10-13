@@ -76,12 +76,39 @@ function deleteSequence(sequenceName) {
     });
 }
 
+function createSequence(sequenceName) {
+    fetch('http://barry.local:5000/sequences/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            sequence_name: sequenceName,
+            colors: [{R: 0, G: 0, B: 0, W: 0}] // Initialize with one black color
+        })
+    })
+    .then(response => {
+        if (response.status === 201) {
+            alert(`La séquence "${sequenceName}" a été créée.`);
+            location.reload();
+        } else {
+            return response.json().then(data => {
+                throw new Error(data.error || 'Erreur inconnue.');
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error creating sequence:', error);
+        alert(`Erreur lors de la création de la séquence: ${error.message}`);
+    });
+}
+
 function openAddModal() {
     const addModal = document.getElementById('add-modal');
     addModal.style.display = 'block';
 
     const confirmAddBtn = document.getElementById('confirm-add');
-    const cancelAddBtn = document.getElementById('add-close');
+    const cancelAddBtn = document.getElementById('cancel-delete');
 
     confirmAddBtn.replaceWith(confirmAddBtn.cloneNode(true));
     cancelAddBtn.replaceWith(cancelAddBtn.cloneNode(true));
@@ -116,36 +143,9 @@ function openAddModal() {
             });
     };
 
-    document.getElementById('add-close').onclick = () => {
+    document.getElementById('cancel-delete').onclick = () => {
         addModal.style.display = 'none';
     };
-}
-
-function createSequence(sequenceName) {
-    fetch('http://barry.local:5000/sequences/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            sequence_name: sequenceName,
-            colors: []
-        })
-    })
-    .then(response => {
-        if (response.status === 201) {
-            alert(`La séquence "${sequenceName}" a été créée.`);
-            location.reload();
-        } else {
-            return response.json().then(data => {
-                throw new Error(data.error || 'Erreur inconnue.');
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Error creating sequence:', error);
-        alert(`Erreur lors de la création de la séquence: ${error.message}`);
-    });
 }
 
 fetchSequences();

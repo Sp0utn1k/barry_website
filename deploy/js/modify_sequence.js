@@ -1,5 +1,3 @@
-// modify_sequence.js
-
 function getSequenceNameFromURL() {
     const params = new URLSearchParams(window.location.search);
     return params.get('name');
@@ -69,7 +67,7 @@ function populateSequenceData(oldName, data) {
             const sliderLabel = document.createElement('label');
             sliderLabel.textContent = channel;
             sliderLabel.htmlFor = `slider-${channel}-${index}`;
-            sliderLabel.style.color = getColorHex(color);
+            sliderLabel.style.color = getChannelColor(channel);
             sliderContainer.appendChild(sliderLabel);
 
             const slider = document.createElement('input');
@@ -79,7 +77,8 @@ function populateSequenceData(oldName, data) {
             slider.value = color[channel];
             slider.id = `slider-${channel}-${index}`;
             slider.className = `slider slider-${channel.toLowerCase()}`;
-            slider.oninput = () => updateSliderBackground(slider, getColorHex(color));
+            slider.oninput = () => updateSliderBackground(slider, getChannelColor(channel));
+            slider.onchange = () => sendRGBWForColor(index);
             sliderContainer.appendChild(slider);
 
             dropdown.appendChild(sliderContainer);
@@ -94,6 +93,38 @@ function populateSequenceData(oldName, data) {
 
         colorItem.appendChild(dropdown);
 
+        // Options menu
+        const optionsMenu = document.createElement('div');
+        optionsMenu.className = 'options-menu';
+        optionsMenu.id = `options-menu-${index}`;
+        optionsMenu.style.display = 'none';
+
+        const optionStart = document.createElement('a');
+        optionStart.href = '#';
+        optionStart.textContent = 'Déplacer au début';
+        optionStart.onclick = (e) => { e.preventDefault(); moveColor(index, 'move_to_start'); };
+        optionsMenu.appendChild(optionStart);
+
+        const optionUp = document.createElement('a');
+        optionUp.href = '#';
+        optionUp.textContent = 'Monter de 1';
+        optionUp.onclick = (e) => { e.preventDefault(); moveColor(index, 'move_up'); };
+        optionsMenu.appendChild(optionUp);
+
+        const optionDown = document.createElement('a');
+        optionDown.href = '#';
+        optionDown.textContent = 'Descendre de 1';
+        optionDown.onclick = (e) => { e.preventDefault(); moveColor(index, 'move_down'); };
+        optionsMenu.appendChild(optionDown);
+
+        const optionEnd = document.createElement('a');
+        optionEnd.href = '#';
+        optionEnd.textContent = 'Déplacer à la fin';
+        optionEnd.onclick = (e) => { e.preventDefault(); moveColor(index, 'move_to_end'); };
+        optionsMenu.appendChild(optionEnd);
+
+        colorItem.appendChild(optionsMenu);
+
         colorsList.appendChild(colorItem);
     });
 }
@@ -103,6 +134,16 @@ function getColorHex(color) {
     const g = Math.round(color.G / 32767 * 255);
     const b = Math.round(color.B / 32767 * 255);
     return `rgb(${r}, ${g}, ${b})`;
+}
+
+function getChannelColor(channel) {
+    const colors = {
+        'R': '#a50f01',
+        'G': '#299e37',
+        'B': '#4d8dd6',
+        'W': '#ffeac1'
+    };
+    return colors[channel] || '#000000';
 }
 
 function toggleColorDropdown(index) {
@@ -123,26 +164,26 @@ function updateSliderBackground(slider, color) {
     slider.style.background = 'linear-gradient(to right, ' + color + ' 0%, ' + color + ' ' + percentage + '%, #cccccc ' + percentage + '%, #cccccc 100%)';
 }
 
-function saveColor(index) {
-    const channels = ['R', 'G', 'B', 'W'];
-    let updatedColor = {};
-
-    channels.forEach(channel => {
-        const slider = document.getElementById(`slider-${channel}-${index}`);
-        updatedColor[channel] = parseInt(slider.value, 10);
-    });
-
+function sendRGBWForColor(index) {
     const sequenceName = getSequenceNameFromURL();
+    const colorItem = document.querySelector(`.color-item[data-index='${index}']`);
+    const sliders = colorItem.querySelectorAll('.slider');
+
+    let colorData = {};
+    sliders.forEach(slider => {
+        const channel = slider.id.split('-')[1].toUpperCase();
+        colorData[channel] = parseInt(slider.value, 10);
+    });
 
     fetch(`http://barry.local:5000/sequences/${encodeURIComponent(sequenceName)}`)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Failed to fetch sequence for update.');
+                throw new Error('Failed to fetch sequence for updating color.');
             }
             return response.json();
         })
         .then(data => {
-            data[index] = updatedColor;
+            data[index] = colorData;
             return fetch(`http://barry.local:5000/sequences/${encodeURIComponent(sequenceName)}`, {
                 method: 'PUT',
                 headers: {
@@ -157,7 +198,7 @@ function saveColor(index) {
                 location.reload();
             } else {
                 return response.json().then(data => {
-                    throw new Error(data.error || 'Erreur inconnue.');
+                    throw new Error(data.error || 'Erreur inconnue lors de la mise à jour de la couleur.');
                 });
             }
         })
@@ -165,6 +206,10 @@ function saveColor(index) {
             console.error('Error updating color:', error);
             alert(`Erreur lors de la mise à jour de la couleur: ${error.message}`);
         });
+}
+
+function saveColor(index) {
+    sendRGBWForColor(index);
 }
 
 function deleteColor(index) {
@@ -252,7 +297,7 @@ function moveColor(index, action) {
                 location.reload();
             } else {
                 return response.json().then(data => {
-                    throw new Error(data.error || 'Erreur inconnue.');
+                    throw new Error(data.error || 'Erreur inconnue lors du déplacement de la couleur.');
                 });
             }
         })

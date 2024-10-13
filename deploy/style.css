@@ -503,8 +503,13 @@ header {
 }
 
 .save-button {
+    margin-top: 10px;
+    padding: 8px 16px;
     background-color: #299e37;
     color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .save-button:hover {
@@ -568,10 +573,11 @@ header {
 
 .color-item {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     padding: 10px 15px;
     border-bottom: 1px solid #ccc;
+    font-size: 24px;
     position: relative;
 }
 
@@ -580,22 +586,18 @@ header {
     cursor: pointer;
 }
 
-.color-item .delete-icon {
-    margin-left: 20px;
-}
-
+.color-item .delete-icon,
 .color-item .options-icon {
     margin-left: 10px;
     cursor: pointer;
-    font-size: 24px;
 }
 
 .color-dropdown {
-    display: none;
-    flex-direction: column;
-    padding: 10px 20px;
-    background-color: #f9f9f9;
-    border-top: 1px solid #ccc;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
 }
 
 .color-dropdown .slider-container {
@@ -607,24 +609,22 @@ header {
 }
 
 .options-menu {
-    display: none;
     position: absolute;
-    top: 40px;
+    top: 100%;
     right: 15px;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     border-radius: 4px;
-    z-index: 1001;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: none;
+    flex-direction: column;
+    z-index: 100;
 }
 
 .options-menu a {
-    display: block;
-    padding: 10px 20px;
+    padding: 10px;
     text-decoration: none;
-    color: black;
+    color: #000;
     cursor: pointer;
-    font-size: 16px;
 }
 
 .options-menu a:hover {
