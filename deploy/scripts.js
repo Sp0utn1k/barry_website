@@ -155,7 +155,7 @@ sliders.forEach(function(s) {
 
 // Function to fetch and display all sequences
 function fetchSequences() {
-    fetch('/sequences/')
+    fetch('http://barry.local:5000/sequences/')
         .then(response => response.json())
         .then(data => {
             const sequencesList = document.getElementById('sequences-list');
@@ -214,7 +214,7 @@ function openDeleteModal(sequenceName) {
 
 // Function to delete a sequence
 function deleteSequence(sequenceName) {
-    fetch(`/sequences/${encodeURIComponent(sequenceName)}`, {
+    fetch('http://barry.local:5000/sequences/${encodeURIComponent(sequenceName)}', {
         method: 'DELETE'
     })
     .then(response => {
@@ -256,7 +256,7 @@ function openAddModal() {
         }
 
         // Check if the sequence name already exists
-        fetch('/sequences/')
+        fetch('http://barry.local:5000/sequences/')
             .then(response => response.json())
             .then(data => {
                 const exists = data.some(seq => seq.sequence_name.toLowerCase() === newSequenceName.toLowerCase());
@@ -280,7 +280,7 @@ function openAddModal() {
 
 // Function to create a new sequence
 function createSequence(sequenceName) {
-    fetch('/sequences/', {
+    fetch('http://barry.local:5000/sequences/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
