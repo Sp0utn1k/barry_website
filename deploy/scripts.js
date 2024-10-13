@@ -151,24 +151,27 @@ sliders.forEach(function(s) {
     });
 });
 
-// scripts.js
-
 // Function to fetch and display all sequences
 function fetchSequences() {
     fetch('http://barry.local:5000/sequences/')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
         .then(data => {
             const sequencesList = document.getElementById('sequences-list');
             sequencesList.innerHTML = ''; // Clear existing list
 
-            data.forEach(sequence => {
+            Object.keys(data).forEach(sequenceName => {
                 const listItem = document.createElement('li');
                 listItem.className = 'sequence-item';
 
                 // Sequence Name (Clickable)
                 const sequenceLink = document.createElement('a');
-                sequenceLink.textContent = sequence.sequence_name;
-                sequenceLink.href = `modify_sequence.shtml?name=${encodeURIComponent(sequence.sequence_name)}`; // Redirect to modify page
+                sequenceLink.textContent = sequenceName;
+                sequenceLink.href = `modify_sequence.shtml?name=${encodeURIComponent(sequenceName)}`; // Redirect to modify page
                 listItem.appendChild(sequenceLink);
 
                 // Delete Icon
@@ -176,7 +179,7 @@ function fetchSequences() {
                 deleteIcon.className = 'delete-icon';
                 deleteIcon.innerHTML = '&#128465;'; // Trash can icon (Unicode)
                 deleteIcon.title = 'Supprimer la séquence';
-                deleteIcon.onclick = () => openDeleteModal(sequence.sequence_name);
+                deleteIcon.onclick = () => openDeleteModal(sequenceName);
                 listItem.appendChild(deleteIcon);
 
                 sequencesList.appendChild(listItem);
@@ -214,7 +217,7 @@ function openDeleteModal(sequenceName) {
 
 // Function to delete a sequence
 function deleteSequence(sequenceName) {
-    fetch('http://barry.local:5000/sequences/${encodeURIComponent(sequenceName)}', {
+    fetch(`http://barry.local:5000/sequences/${encodeURIComponent(sequenceName)}`, { // Fixed template literal
         method: 'DELETE'
     })
     .then(response => {
@@ -257,9 +260,14 @@ function openAddModal() {
 
         // Check if the sequence name already exists
         fetch('http://barry.local:5000/sequences/')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
             .then(data => {
-                const exists = data.some(seq => seq.sequence_name.toLowerCase() === newSequenceName.toLowerCase());
+                const exists = Object.keys(data).some(seq => seq.toLowerCase() === newSequenceName.toLowerCase());
                 if (exists) {
                     alert('Une séquence avec ce nom existe déjà.');
                 } else {
