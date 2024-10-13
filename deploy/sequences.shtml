@@ -38,8 +38,8 @@
         </div>
     </div>
 
-    <script src="common.js"></script>
-    <script src="sequences.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/sequences.js"></script>
 
 </body>
 </html>

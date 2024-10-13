@@ -14,6 +14,6 @@
             Bienvenue sur le site de Barry&nbsp;!
         </div>
     </div>
-    <script src="common.js"></script>
+    <script src="js/common.js"></script>
 </body>
 </html>
