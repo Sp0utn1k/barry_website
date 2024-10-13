@@ -317,8 +317,8 @@ header {
     background: #ffeac1;
 }
 
-/* Text styles for color names */
-.text-block-red, .text-block-green, .text-block-blue, .text-block-warm-white {
+/* Text styles for color names with thin black contour */
+.color-name {
     flex-flow: row;
     flex: 0 auto;
     justify-content: center;
@@ -326,8 +326,15 @@ header {
     font-family: Oswald, sans-serif;
     font-size: 28px;
     display: flex;
+    /* Thin black contour using text-shadow */
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
 }
 
+/* Individual color name styles */
 .text-block-red {
     color: #a50f01;
 }
@@ -526,6 +533,8 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .rename-button:hover {
@@ -605,6 +614,12 @@ header {
 .color-item .color-name {
     font-size: 24px;
     cursor: pointer;
+    /* Thin black contour using text-shadow */
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
 }
 
 /* Icons Container */
@@ -751,5 +766,17 @@ header {
 
     .options-menu {
         right: 10px;
+    }
+
+    .buttons-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .add-button, .save-button {
+        position: static;
     }
 }

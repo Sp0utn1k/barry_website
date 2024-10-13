@@ -13,6 +13,7 @@
     <!--#include virtual="header.html" -->
     
     <div id="modify-sequence-container">
+        <!-- Rename Sequence Form -->
         <div class="rename-container">
             <form id="rename-form">
                 <input type="text" id="sequence-name-input" placeholder="Nom de la séquence">
@@ -20,11 +21,16 @@
             </form>
         </div>
 
+        <!-- Colors List -->
         <ul id="colors-list">
             <!-- Colors will be dynamically populated here -->
         </ul>
 
-        <button id="add-color-button" class="add-button">+</button>
+        <!-- Add Color and Enregistrer Buttons -->
+        <div class="buttons-container">
+            <button id="add-color-button" class="add-button">+</button>
+            <button id="save-sequence-button" class="save-button">Enregistrer</button>
+        </div>
     </div>
 
     <!-- Option Menu for Colors (Dynamic within modify_sequence.js) -->
