@@ -207,7 +207,7 @@ function setupAddAlarmModal() {
             time: time,
             duration: durationSeconds, // Send duration in seconds to backend
             sequence_name: sequenceName,
-            active: false, // Default to inactive
+            active: true, // Default to inactive
             repeat: repeat
         };
 

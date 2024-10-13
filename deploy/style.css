@@ -733,6 +733,60 @@ header {
     width: 100%;
 }
 
+/* Alarms Page Container */
+#alarms-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#alarms-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 36px;
+}
+
+#alarms-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.alarm-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ccc;
+    font-size: 20px;
+}
+
+.alarm-time {
+    flex: 1;
+}
+
+.alarm-sequence {
+    flex: 2;
+    text-align: center;
+}
+
+.alarm-duration {
+    flex: 1;
+    text-align: center;
+}
+
+/* Delete Alarm Icon Styles */
+.delete-icon {
+    color: #a50f01; /* Matching the red color from slider */
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.delete-icon:hover {
+    color: #ff0000;
+}
+
+
+
 /* Responsive Adjustments for Modify Sequence Page */
 @media screen and (max-width: 1024px) {
     #modify-sequence-container {
